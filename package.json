@@ -1,0 +1,57 @@
+{
+  "name": "noticias-pr",
+  "version": "0.0.1",
+  "description": "Lee noticias locales desde tu terminal",
+  "scripts": {
+    "cli": "DEBUG=noticias-pr,noticieros node cli.js",
+    "test": "nyc mocha test",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && coveralls"
+  },
+  "repository": "rnegron/noticias-pr-cli",
+  "bugs": {
+    "url": "https://github.com/rnegron/noticias-pr-cli/issues"
+  },
+  "author": {
+    "name": "Raúl Negrón",
+    "email": "raul@raulnegron.me",
+    "url": "https://raulnegron.me"
+  },
+  "license": "MIT",
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "cli-app",
+    "cli",
+    "command-line",
+    "console",
+    "terminal",
+    "news",
+    "noticias",
+    "puerto rico",
+    "pr"
+  ],
+  "dependencies": {
+    "@postlight/mercury-parser": "^1.1.1",
+    "ansi-escapes": "^3.2.0",
+    "clear": "^0.1.0",
+    "clear-terminal": "0.0.2",
+    "date-fns": "^1.30.1",
+    "got": "^9.6.0",
+    "html2plaintext": "^2.1.2",
+    "is-reachable": "^3.0.0",
+    "ora": "^3.0.0",
+    "prompts": "^2.0.1",
+    "terminal-image": "^0.1.2",
+    "terminal-link": "^1.2.0",
+    "x-ray": "^2.3.3"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "debug": "^4.1.1",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.6",
+    "nyc": "^13.2.0"
+  }
+}
