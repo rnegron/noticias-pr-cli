@@ -8,8 +8,7 @@ const siteUrl = "https://www.elnuevodia.com";
 
 describe("parsing articles", function() {
   context("having internet connection and articles being available", function() {
-    console.log(__dirname);
-    const html = fs.readFileSync(path.join(__dirname, "endi.html"), "utf8");
+    const html = fs.readFileSync(path.join(__dirname, "elnuevodia.html"), "utf8");
     beforeEach(() => {
       nock(siteUrl)
         .get("/")
@@ -17,7 +16,7 @@ describe("parsing articles", function() {
     });
 
     it("should return the leading article", async function() {
-      const response = await xray(siteUrl, ".featured-stories-primary", [
+      const response = await xray(siteUrl, ".bk4-8of12 .featured-stories-primary article", [
         {
           title: ".story-tease-title a | trim",
           summary: ".story-tease-summary p | trim",
@@ -26,10 +25,12 @@ describe("parsing articles", function() {
         },
       ]);
 
+      console.log("response: " + JSON.stringify(response));
+
       expect(response)
         .to.be.an("array")
         .and.have.lengthOf(1);
-      for (article of response) {
+      for (let article of response) {
         expect(article)
           .to.be.an("object")
           .and.to.have.all.keys("title", "summary", "image", "link");
@@ -45,7 +46,7 @@ describe("parsing articles", function() {
     });
 
     it("should return the secondary articles", async function() {
-      const response = await xray(siteUrl, ".featured-stories-secondary", [
+      const response = await xray(siteUrl, ".bk4-8of12 .featured-stories-secondary article", [
         {
           title: ".story-tease-title a | trim",
           summary: ".story-tease-summary p | trim",
@@ -53,12 +54,12 @@ describe("parsing articles", function() {
         },
       ]);
 
-      console.log("response:", response)
+      console.log("response:", response);
 
       expect(response)
         .to.be.an("array")
         .and.to.have.lengthOf(2);
-      for (article of response) {
+      for (let article of response) {
         expect(article)
           .to.be.an("object")
           .and.to.have.all.keys("title", "summary", "link");

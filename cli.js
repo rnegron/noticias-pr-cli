@@ -1,20 +1,19 @@
 #!/usr/bin/env node
 "use strict";
 
-const debug = require("debug")("noticias-pr");
-
 // The sindresorhus block
 const got = require("got");
 const ora = require("ora");
 const isReachable = require("is-reachable");
-const clearTerminal = require("clear-terminal");
-
-const terminalImage = require("terminal-image");
-const Mercury = require("@postlight/mercury-parser");
-const formatDate = require("date-fns").format;
-
+const ansiEscapes = require("ansi-escapes");
 const terminalLink = require("terminal-link");
+const terminalImage = require("terminal-image");
+
+const cFonts = require("cfonts");
+const formatDate = require("date-fns").format;
+const logger = require("debug")("noticias-pr");
 const htmlToPlainText = require("html2plaintext");
+const Mercury = require("@postlight/mercury-parser");
 
 // Custom modules
 const prompts = require("./lib/prompts");
@@ -22,15 +21,15 @@ const news = require("./lib/noticieros");
 
 function exit() {
   // Exit the application manually
-  clearTerminal();
+  process.stdout.write(ansiEscapes.clearScreen);
   process.exit(0);
 }
 
 async function chooseNewsSite() {
-  const articleChoices = [];
+  // Prompts the user to select a news site, checks for internet connection,
+  // then calls the function for fetching the top articles for that site
 
-  // Obtain news site and articles
-
+  // Prompt for selecting news site
   const siteResponse = await prompts({
     message: "Escoge un noticiero",
     choices: [
@@ -41,21 +40,26 @@ async function chooseNewsSite() {
     ],
   });
 
-  debug("Site response: %O", siteResponse);
+  logger("Site response: %O", siteResponse);
 
   // Exit manually if the user chose to
   if (siteResponse.value === "exit") {
     exit();
   }
 
-  debug("verifying that news site %s is available", siteResponse.value);
+  logger("verifying that news site %s is available", siteResponse.value);
 
   // Verify internet connectivity for the selected news site
   const reachableSpinner = ora("Verificando conneción...").start();
   try {
-    if ((await isReachable(siteResponse.value)) === true) {
+    // let siteIsReachable = await isReachable(siteResponse.value)
+    let siteIsReachable = true;
+    if (siteIsReachable === true) {
       // Site is reachable
       reachableSpinner.succeed();
+
+      // Continue down the chain, go to fetching article for selected news site
+      return await getNews(siteResponse.value);
     } else {
       // Site unreachable, throw an error
       throw new Error(
@@ -67,70 +71,93 @@ async function chooseNewsSite() {
     reachableSpinner.fail(err.message);
     process.exit(1);
   }
-
-  return siteResponse.value;
 }
 
 async function chooseArticle(articleChoices) {
-  // Get articles
+  process.stdout.write(ansiEscapes.clearScreen);
+
+  // Prompt the user to select an article given some choices
+  logger("Choices %O", articleChoices);
+
   try {
-    debug("Choices %O", articleChoices);
     const articleResponse = await prompts({
       message: "Escoge un artículo",
       choices: articleChoices,
     });
 
-    debug("Choices response: %O", articleResponse);
+    logger("Article choices response: %O", articleResponse);
 
+    // Return to news site selection manually if the user chose to
     if (articleResponse.value === "back") {
-      await main();
+      await mainMenu();
     }
 
-    return articleResponse.value;
+    // Continue down the chain
+    return await getArticle(articleResponse.value);
   } catch (err) {
-    console.error(err.message);
+    // Crash on error
+    process.exit(1);
   }
 }
 
 async function prepareImage(article) {
+  // Verifies that the article parsed via Mercury has a lead image, and tries to fetch it
   if (article.lead_image_url) {
     const imageLoadingSpinner = ora("Descargando y preparando imágen...");
     try {
-      debug("Working on image: %s", article.lead_image_url);
+      logger("Working on image: %s", article.lead_image_url);
+
       imageLoadingSpinner.start();
+      // Fetch the image using got
       const { body } = await got(article.lead_image_url, { encoding: null });
+
+      // Prepare the image for displaying it in the terminal
       const articleImage = await terminalImage.buffer(body);
       imageLoadingSpinner.succeed();
+
+      // Return prepared image
       return articleImage;
     } catch (err) {
       imageLoadingSpinner.warn("No se pudo desplegar la imágen!" + err.message);
+
+      // Return no image
       return "";
     }
+  } else {
+
+    // Return no image
+    return "";
   }
 }
 
 async function getArticle(articleUrl) {
-  // return article
+  // Return parsed article
   const prepareArticleSpinner = ora("Cargando artículo...");
-  // Get article from Mercury Parse
-  let article = {};
 
+  // Get article from Mercury Parse
   try {
     prepareArticleSpinner.start();
     // Parse article
-    article = await Mercury.parse(articleUrl);
-    debug("Article: %O", article);
+    const article = await Mercury.parse(articleUrl);
     prepareArticleSpinner.succeed();
+
+    logger("Article: %O", article);
+
+    // Return parsed article
     return article;
   } catch (err) {
-    prepareArticleSpinner.fail(err);
+    // Display warning in spinner and crash
+    prepareArticleSpinner.fail(err.message);
+    process.exit(1);
   }
 }
 
 async function getNews(newsSource) {
   // return candidate articles
   const articleChoices = [];
-  debug("waiting for articles...");
+
+  logger("waiting for articles...");
+
   const articleLoadingSpinner = ora("Cargando titulares...");
 
   articleLoadingSpinner.start();
@@ -138,7 +165,7 @@ async function getNews(newsSource) {
     const articles = await news(newsSource);
 
     for (let article of articles) {
-      debug("Article: %O", article);
+      logger("Article: %O", article);
       articleChoices.push({ title: article.title, value: article.link });
     }
 
@@ -153,56 +180,91 @@ async function getNews(newsSource) {
   }
 }
 
-async function mainMenu() {
-  let articleImage = "";
+async function mainMenu(articleChoices = null) {
+  // Menu for picking a news site. Outputs the article chosen by the user.
+  // If given an array of article choices, skips the step of choosing the site.
   let article = "";
+  let articleImage = "";
 
-  try {
-    let newsSource = await chooseNewsSite();
-    let articleChoices = await getNews(newsSource);
-    let articleUrl = await chooseArticle(articleChoices);
-    article = await getArticle(articleUrl);
-    articleImage = await prepareImage(article);
-  } catch (err) {
-    console.log(err.message);
-    process.exit(1);
+  if (articleChoices !== null) {
+    //
+    try {
+      // Returning flow, pick an article from the already chosen news site
+      article = await chooseArticle(articleChoices);
+      articleImage = await prepareImage(article);
+    } catch (err) {
+      // Crash on error
+      process.exit(1);
+    }
+  } else {
+    try {
+      // First-time flow, pick a news site and then obtain article and image
+      articleChoices = await chooseNewsSite();
+      article = await chooseArticle(articleChoices);
+      articleImage = await prepareImage(article);
+    } catch (err) {
+      // Crash on error
+      process.exit(1);
+    }
   }
 
+  // Display the article
   console.log(`
     \n
     ${articleImage}
-    Título: ${article.title}
-    Publicado: ${formatDate(article.date_published, "D/M/YYYY")}
-    Leer en la web:  ${terminalLink(article.domain, article.url)}
+    \n
+    \t\t\tTítulo: ${article.title}
+    \t\t\tPublicado: ${formatDate(article.date_published, "D/M/YYYY")}
+    \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
     \n\n
     ${htmlToPlainText(article.content)}
     \n
   `);
 
+  // Prompt the user after the article is displaying for what to do next
   try {
     const afterArticleResponse = await prompts({
       message: "Opción",
       choices: [
         { title: "Regresar a noticieros", value: "1" },
+        { title: "Regresar a artículos", value: "2" },
         { title: "Salir", value: "3" },
       ],
     });
 
+    // After displaying the article, give choices on how to proceed
     switch (afterArticleResponse.value) {
+      // Go back to selecting a news site
       case "1":
         await mainMenu();
         break;
+
+      // Go back to selecting an article
+      case "2":
+        process.stdout.write(ansiEscapes.clearScreen);
+        await mainMenu(articleChoices);
+        break;
+
+      // Exit the CLI
       case "3":
         exit();
     }
   } catch (err) {
-    console.error(err.message);
+    process.exit(1);
   }
 }
 
+// Fancy font intro
+cFonts.say("noticias|PR", {
+  font: "block",
+  align: "center",
+  colors: ["system"],
+  background: "transparent",
+  letterSpacing: 1,
+  lineHeight: 1,
+  space: true,
+  maxLength: "0",
+});
+
 // Entrypoint
-(async () => {
-  // Set window title
-  // process.stdout.write("'\x1b]2;noticias-pr\x1b\\'");
-  await mainMenu();
-})();
+mainMenu();
