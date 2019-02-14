@@ -5,16 +5,14 @@
 <p align="center">
 
 [![Build Status](https://travis-ci.org/rnegron/noticias-pr-cli.svg?branch=master)](https://travis-ci.org/rnegron/noticias-pr-cli)
-
 [![Coverage Status](https://coveralls.io/repos/github/rnegron/noticias-pr-cli/badge.svg?branch=master)](https://coveralls.io/github/rnegron/noticias-pr-cli?branch=master)
-
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 </p>
 
 <p align="center" width><code>noticias-pr</code> es una herramienta del command-line escrita en Node.js para navegar y leer noticias locales desde la comodidad de tu terminal.</p>
 
-Esta aplicación fue creada con la intención de practicar NodeJS y para aprender como publicar un paquete en [NPM](https://www.npmjs.com/package/noticias-pr).
+Esta aplicación fue creada con la intención de practicar NodeJS y para aprender como publicar un paquete en [npm](https://www.npmjs.com/package/noticias-pr).
 
 - [Demo](#demo)
 - [Instalación](#instalación)
@@ -35,7 +33,7 @@ Asegurate tener [NodeJS](https://nodejs.org/en/) versión 8 en adelante.
 $ npm install -g noticias-pr
 ```
 
-Con la opcíon `-g`, **npm** instalará `noticias-pr` globalmente, y el comando "`noticas-pr`" estará siempre accesible.
+Con la opción `-g`, **npm** instalará `noticias-pr` globalmente, y el comando "`noticas-pr`" estará siempre accesible.
 
 ## Uso
 
