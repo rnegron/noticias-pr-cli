@@ -48,6 +48,8 @@ Luego, seguir las instrucciones desplegadas en el terminal.
     Para navegar: Utilizar las flechas del teclado.
     Para aceptar: Utilizar la tecla de "enter" o "return".
 
+**Nota**: Si ocurre que al navegar entre las opciones comienzan a aparecer líneas nuevas, incrementar el ancho del terminal usualmente arregla el problema. Es un bug que estoy buscando resolver.
+
 ### Noticieros Disponibles
 
 En orden de añadición:

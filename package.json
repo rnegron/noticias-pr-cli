@@ -4,8 +4,8 @@
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi node cli.js",
-    "test": "nyc --all --reporter=html --reporter=text mocha",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && coveralls"
+    "test": "nyc --all mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",
@@ -49,15 +49,17 @@
     ]
   },
   "dependencies": {
-    "@postlight/mercury-parser": "^1.1.1",
+    "@postlight/mercury-parser": "^2.0.0",
     "ansi-escapes": "^3.2.0",
     "cfonts": "^2.4.2",
+    "cli-truncate": "^1.1.0",
     "date-fns": "^1.30.1",
     "got": "^9.6.0",
     "html2plaintext": "^2.1.2",
     "is-reachable": "^3.0.0",
     "ora": "^3.0.0",
     "prompts": "^2.0.1",
+    "term-size": "^1.2.0",
     "terminal-image": "^0.1.2",
     "terminal-link": "^1.2.0",
     "x-ray": "^2.3.3"

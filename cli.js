@@ -4,8 +4,10 @@
 // The sindresorhus block
 const got = require('got');
 const ora = require('ora');
+const termSize = require('term-size');
 const isReachable = require('is-reachable');
 const ansiEscapes = require('ansi-escapes');
+const cliTruncate = require('cli-truncate');
 const terminalLink = require('terminal-link');
 const terminalImage = require('terminal-image');
 
@@ -73,6 +75,8 @@ async function chooseNewsSite () {
 }
 
 async function chooseArticle (articleChoices) {
+  process.stdout.write(ansiEscapes.clearScreen);
+
   // Prompt the user to select an article given some choices
   logger('Choices: %O', articleChoices);
 
@@ -160,9 +164,17 @@ async function getNews (newsSource) {
   try {
     const articles = await news(newsSource);
 
+    // Obtain the terminal column
+    const { columns } = termSize();
+    logger('Terminal columns: %d', columns);
+
     for (let article of articles) {
       logger('Article: %O', article);
-      articleChoices.push({ title: article.title, value: article.link });
+      articleChoices.push({
+        // Truncate the title as a function of the available terminal columns
+        title: cliTruncate(article.title, columns - 5),
+        value: article.link
+      });
     }
 
     // Add back option
@@ -186,7 +198,6 @@ async function mainMenu (articleChoices = null) {
     //
     try {
       // Returning flow, pick an article from the already chosen news site
-      process.stdout.write(ansiEscapes.clearScreen);
       article = await chooseArticle(articleChoices);
       articleImage = await prepareImage(article);
     } catch (err) {
@@ -197,7 +208,6 @@ async function mainMenu (articleChoices = null) {
     try {
       // First-time flow, pick a news site and then obtain article and image
       articleChoices = await chooseNewsSite();
-      process.stdout.write(ansiEscapes.clearScreen);
       article = await chooseArticle(articleChoices);
       articleImage = await prepareImage(article);
     } catch (err) {
