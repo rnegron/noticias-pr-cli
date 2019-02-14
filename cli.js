@@ -61,7 +61,9 @@ async function chooseNewsSite () {
       return await getNews(siteResponse.value);
     } else {
       // Site unreachable, fail the spinner and throw an error
-      reachableSpinner.fail('La connecíon falló! Favor de verificar la conectividad al internet.');
+      reachableSpinner.fail(
+        'La connecíon falló! Favor de verificar la conectividad al internet.'
+      );
       throw new Error('Site unreachable');
     }
   } catch (err) {
@@ -71,10 +73,8 @@ async function chooseNewsSite () {
 }
 
 async function chooseArticle (articleChoices) {
-  process.stdout.write(ansiEscapes.clearScreen);
-
   // Prompt the user to select an article given some choices
-  logger('Choices %O', articleChoices);
+  logger('Choices: %O', articleChoices);
 
   try {
     const articleResponse = await prompts({
@@ -186,6 +186,7 @@ async function mainMenu (articleChoices = null) {
     //
     try {
       // Returning flow, pick an article from the already chosen news site
+      process.stdout.write(ansiEscapes.clearScreen);
       article = await chooseArticle(articleChoices);
       articleImage = await prepareImage(article);
     } catch (err) {
@@ -196,6 +197,7 @@ async function mainMenu (articleChoices = null) {
     try {
       // First-time flow, pick a news site and then obtain article and image
       articleChoices = await chooseNewsSite();
+      process.stdout.write(ansiEscapes.clearScreen);
       article = await chooseArticle(articleChoices);
       articleImage = await prepareImage(article);
     } catch (err) {

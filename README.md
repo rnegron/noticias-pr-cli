@@ -23,7 +23,7 @@ Esta aplicación fue creada con la intención de practicar NodeJS y para aprende
 
 ## Demo
 
-<p align="center"><img src="/img/cli-demo.gif" style="width: 40%; height: 40%"/></p>
+<p align="center"><img src="/img/cli-demo.gif" style="width: 30%; height: 30%"/></p>
 
 ## Instalación
 
