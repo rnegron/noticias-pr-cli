@@ -25,7 +25,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Other
     - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
-## [0.0.1] - 2019-02-13
+
+## [0.1.2] - 2019-02-14
+
+### Added
+- Una función `onDelete` para para que los prompts cierren sin tanto error
+
+### Fixed
+- Ahora `package.json` tiene una llave "main"
+
+## [0.1.1] - 2019-02-13
 ### Added
 - Versión beta
-- Paquete publicado en NPM
+- Paquete publicado en npm
+
+
