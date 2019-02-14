@@ -7,7 +7,7 @@
 
 <p align="center" width><code>noticias-pr</code> es una herramienta del command-line escrita en Node.js para navegar y leer noticias locales desde la comodidad de tu terminal.</p>
 
-Creada con la intención de practicar NodeJS y para aprender como publicar un paquete en NPM.
+Esta aplicación fue creada con la intención de practicar NodeJS y para aprender como publicar un paquete en [NPM](https://www.npmjs.com/package/noticias-pr).
 
 - [Demo](#demo)
 - [Instalación](#instalación)
@@ -18,11 +18,11 @@ Creada con la intención de practicar NodeJS y para aprender como publicar un pa
 
 ## Demo
 
-<p align="center"><img src="/img/cli-demo.gif" style="width: 50%; height: 50%"/></p>
+<p align="center"><img src="/img/cli-demo.gif" style="width: 30%; height: 30%"/></p>
 
 ## Instalación
 
-Asegurate tener [Node](https://nodejs.org/en/) versión 8 en adelante.
+Asegurate tener [NodeJS](https://nodejs.org/en/) versión 8 en adelante.
 
 ```bash
 $ npm install -g noticias-pr
@@ -38,8 +38,8 @@ noticias-pr
 
 Luego, seguir las instrucciones desplegadas en el terminal.
 
-    Para navegar: usar las flechas del teclado.
-    Para aceptar: Utilizar el teclado de **enter** o **return**.
+    Para navegar: Utilizar las flechas del teclado.
+    Para aceptar: Utilizar la tecla de "enter" o "return".
 
 ### Noticieros Disponibles
 

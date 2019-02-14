@@ -1,10 +1,10 @@
 {
   "name": "noticias-pr",
-  "version": "0.1.0",
-  "description": "Lee noticias locales desde tu terminal",
+  "version": "0.1.1",
+  "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi node cli.js",
-    "test": "nyc mocha test",
+    "test": "nyc --all --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && coveralls"
   },
   "repository": "rnegron/noticias-pr-cli",
@@ -39,6 +39,12 @@
   "semistandard": {
     "env": [
       "mocha"
+    ]
+  },
+  "nyc": {
+    "include": [
+      "lib/**",
+      "cli.js"
     ]
   },
   "dependencies": {
