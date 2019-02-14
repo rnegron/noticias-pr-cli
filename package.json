@@ -7,6 +7,7 @@
     "test": "nyc --all --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && coveralls"
   },
+  "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",
   "bugs": {
     "url": "https://github.com/rnegron/noticias-pr-cli/issues"
