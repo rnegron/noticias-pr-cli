@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 'use strict';
 
 // The sindresorhus block
@@ -36,8 +35,9 @@ async function chooseNewsSite () {
     message: 'Escoge un noticiero',
     choices: [
       { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
+      { title: 'Primera Hora', value: 'www.primerahora.com' },
+      { title: 'Noticel', value: 'www.noticel.com' },
       { title: 'El Vocero', value: 'www.elvocero.com', disabled: true },
-      { title: 'Primera Hora', value: 'www.primerahora.com', disabled: true },
       { title: 'Salir', value: 'exit' }
     ]
   });
@@ -59,7 +59,7 @@ async function chooseNewsSite () {
       // Site is reachable
       reachableSpinner.succeed();
 
-      // Continue down the chain, go to fetching article for selected news site
+      // Continue down the chain, go fetch articles for the selected news site
       return await getNews(siteResponse.value);
     } else {
       // Site unreachable, fail the spinner and throw an error
@@ -276,3 +276,12 @@ cFonts.say('noticias|PR', {
 
 // Entrypoint
 mainMenu();
+
+module.exports = {
+  chooseNewsSite,
+  chooseArticle,
+  prepareImage,
+  getArticle,
+  getNews,
+  mainMenu
+};
