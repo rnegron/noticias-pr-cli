@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## Added
+### Added
 - [ ] Añadir más sites
     - [ ] noticel
     - [ ] vocero
@@ -16,16 +16,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Utilizar [conf](https://github.com/sindresorhus/conf) para almacenar posibles configuraciones
 
-## Changed
+### Changed
 - [ ] Poder utilizar proxies y otras configuraciones relacionadas al http
 
 - [ ] Opciones para el tamaño del font, espacio, color, etc...
 
 - [ ] Múltiples columnas usando [columnify](https://github.com/timoxley/columnify) o similar?
 
-## Other
+### Other
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
+
+## [0.2.1] - 2019-03-3
+### Fixed
+- La falta de un shebang en `cli.js` rompió la instalación desde npm
 
 ## [0.2.0] - 2019-03-03
 ### Added
