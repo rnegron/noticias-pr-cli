@@ -3,10 +3,8 @@
 // The sindresorhus block
 const got = require('got');
 const ora = require('ora');
-const termSize = require('term-size');
 const isReachable = require('is-reachable');
 const ansiEscapes = require('ansi-escapes');
-const cliTruncate = require('cli-truncate');
 const terminalLink = require('terminal-link');
 const terminalImage = require('terminal-image');
 
@@ -18,161 +16,79 @@ const Mercury = require('@postlight/mercury-parser');
 
 // Custom modules
 const prompts = require('./lib/prompts');
-const news = require('./lib/noticieros');
+const retrieveArticlesFromNewsSite = require('./lib/noticieros');
 
+/* istanbul ignore next */
 function exit () {
-  // Exit the application manually
+  // Clear the terminal screen and exit the application manually
   process.stdout.write(ansiEscapes.clearScreen);
   process.exit(0);
 }
 
-async function chooseNewsSite () {
-  // Prompts the user to select a news site, checks for internet connection,
-  // then calls the function for fetching the top articles for that site
+/* istanbul ignore next */
+function printArticle (articleImage, article) {
+  console.log(`
+    \n
+    ${articleImage}
+    \n
+    \t\t\tTítulo: ${article.title}
+    \t\t\tPublicado: ${formatDate(article.date_published, 'D/M/YYYY')}
+    \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
+    \n\n
+    ${htmlToPlainText(article.content)}
+    \n
+  `);
+}
 
-  // Prompt for selecting news site
-  const siteResponse = await prompts({
+/* istanbul ignore next */
+async function checkConnectionToNewsSite (chosenNewsSite) {
+  const reachableSpinner = ora('Verificando conneción...').start();
+
+  let siteIsReachable = await isReachable(chosenNewsSite);
+  if (siteIsReachable === true) {
+    reachableSpinner.succeed();
+  } else {
+    reachableSpinner.fail(
+      'La connecíon falló! Favor de verificar la conectividad al internet.'
+    );
+    throw new Error('Site unreachable');
+  }
+}
+
+async function retrieveNewsSiteChoices () {
+  return [
+    { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
+    { title: 'Primera Hora', value: 'www.primerahora.com' },
+    { title: 'Salir', value: 'exit' }
+  ];
+}
+
+/* istanbul ignore next */
+async function promptForNewsSite (newsSiteChoices) {
+  const newsSiteChoice = await prompts({
     message: 'Escoge un noticiero',
-    choices: [
-      { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
-      { title: 'Primera Hora', value: 'www.primerahora.com' },
-      { title: 'Noticel', value: 'www.noticel.com' },
-      { title: 'El Vocero', value: 'www.elvocero.com', disabled: true },
-      { title: 'Salir', value: 'exit' }
-    ]
+    choices: newsSiteChoices
   });
 
-  logger('Site response: %O', siteResponse);
+  logger('newsSiteChoice: %O', newsSiteChoice);
 
-  // Exit manually if the user chose to
-  if (siteResponse.value === 'exit') {
-    exit();
-  }
-
-  logger('verifying that news site %s is available', siteResponse.value);
-
-  // Verify internet connectivity for the selected news site
-  const reachableSpinner = ora('Verificando conneción...').start();
-  try {
-    let siteIsReachable = await isReachable(siteResponse.value);
-    if (siteIsReachable === true) {
-      // Site is reachable
-      reachableSpinner.succeed();
-
-      // Continue down the chain, go fetch articles for the selected news site
-      return await getNews(siteResponse.value);
-    } else {
-      // Site unreachable, fail the spinner and throw an error
-      reachableSpinner.fail(
-        'La connecíon falló! Favor de verificar la conectividad al internet.'
-      );
-      throw new Error('Site unreachable');
-    }
-  } catch (err) {
-    // Catch the site unreachable error, exit out
-    process.exit(1);
-  }
+  return newsSiteChoice.value;
 }
 
-async function chooseArticle (articleChoices) {
-  process.stdout.write(ansiEscapes.clearScreen);
-
-  // Prompt the user to select an article given some choices
-  logger('Choices: %O', articleChoices);
-
-  try {
-    const articleResponse = await prompts({
-      message: 'Escoge un artículo',
-      choices: articleChoices
-    });
-
-    logger('Article choices response: %O', articleResponse);
-
-    // Return to news site selection manually if the user chose to
-    if (articleResponse.value === 'back') {
-      await mainMenu();
-    }
-
-    // Continue down the chain
-    return await getArticle(articleResponse.value);
-  } catch (err) {
-    // Crash on error
-    process.exit(1);
-  }
-}
-
-async function prepareImage (article) {
-  // Verifies that the article parsed via Mercury has a lead image, and tries to fetch it
-  if (article.lead_image_url) {
-    const imageLoadingSpinner = ora('Descargando y preparando imágen...');
-    try {
-      logger('Working on image: %s', article.lead_image_url);
-
-      imageLoadingSpinner.start();
-      // Fetch the image using got
-      const { body } = await got(article.lead_image_url, { encoding: null });
-
-      // Prepare the image for displaying it in the terminal
-      const articleImage = await terminalImage.buffer(body);
-      imageLoadingSpinner.succeed();
-
-      // Return prepared image
-      return articleImage;
-    } catch (err) {
-      imageLoadingSpinner.warn('No se pudo desplegar la imágen!' + err.message);
-
-      // Return no image
-      return '';
-    }
-  } else {
-    // Return no image
-    return '';
-  }
-}
-
-async function getArticle (articleUrl) {
-  // Return parsed article
-  const prepareArticleSpinner = ora('Cargando artículo...');
-
-  // Get article from Mercury Parse
-  try {
-    prepareArticleSpinner.start();
-    // Parse article
-    const article = await Mercury.parse(articleUrl);
-    prepareArticleSpinner.succeed();
-
-    logger('Article: %O', article);
-
-    // Return parsed article
-    return article;
-  } catch (err) {
-    // Display warning in spinner and crash
-    prepareArticleSpinner.fail(err.message);
-    process.exit(1);
-  }
-}
-
-async function getNews (newsSource) {
-  // return candidate articles
+async function retrieveArticlesAvailable (chosenNewsSite) {
+  // return candidate articles given a news site
   const articleChoices = [];
-
-  logger('waiting for articles...');
 
   const articleLoadingSpinner = ora('Cargando titulares...');
 
   articleLoadingSpinner.start();
   try {
-    const articles = await news(newsSource);
-
-    // Obtain the terminal column
-    const { columns } = termSize();
-    logger('Terminal columns: %d', columns);
+    const articles = await retrieveArticlesFromNewsSite(chosenNewsSite);
 
     for (let article of articles) {
       logger('Article: %O', article);
       articleChoices.push({
-        // Truncate the title as a function of the available terminal columns
-        title: cliTruncate(article.title, columns - 5),
+        title: article.title,
         value: article.link
       });
     }
@@ -188,100 +104,180 @@ async function getNews (newsSource) {
   }
 }
 
-async function mainMenu (articleChoices = null) {
-  // Menu for picking a news site. Outputs the article chosen by the user.
-  // If given an array of article choices, skips the step of choosing the site.
-  let article = '';
-  let articleImage = '';
+/* istanbul ignore next */
+async function promptForArticle (articleChoices) {
+  // Prompt the user to select an article given some choices
+  process.stdout.write(ansiEscapes.clearScreen);
 
-  if (articleChoices !== null) {
-    //
-    try {
-      // Returning flow, pick an article from the already chosen news site
-      article = await chooseArticle(articleChoices);
-      articleImage = await prepareImage(article);
-    } catch (err) {
-      // Crash on error
-      process.exit(1);
-    }
-  } else {
-    try {
-      // First-time flow, pick a news site and then obtain article and image
-      articleChoices = await chooseNewsSite();
-      article = await chooseArticle(articleChoices);
-      articleImage = await prepareImage(article);
-    } catch (err) {
-      // Crash on error
-      process.exit(1);
-    }
-  }
+  logger('Article choices: %O', articleChoices);
 
-  // Display the article
-  console.log(`
-    \n
-    ${articleImage}
-    \n
-    \t\t\tTítulo: ${article.title}
-    \t\t\tPublicado: ${formatDate(article.date_published, 'D/M/YYYY')}
-    \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
-    \n\n
-    ${htmlToPlainText(article.content)}
-    \n
-  `);
-
-  // Prompt the user after the article is displaying for what to do next
   try {
-    const afterArticleResponse = await prompts({
-      message: 'Opción',
-      choices: [
-        { title: 'Regresar a noticieros', value: '1' },
-        { title: 'Regresar a artículos', value: '2' },
-        { title: 'Salir', value: '3' }
-      ]
+    const articleResponse = await prompts({
+      message: 'Escoge un artículo',
+      choices: articleChoices
     });
 
-    // After displaying the article, give choices on how to proceed
-    switch (afterArticleResponse.value) {
-      // Go back to selecting a news site
-      case '1':
-        await mainMenu();
-        break;
+    logger('Article choices response: %O', articleResponse);
 
-      // Go back to selecting an article
-      case '2':
-        process.stdout.write(ansiEscapes.clearScreen);
-        await mainMenu(articleChoices);
-        break;
-
-      // Exit the CLI
-      case '3':
-        exit();
+    // Return to news site selection manually if the user chose to
+    if (articleResponse.value === 'back') {
+      await cliInitialMenu();
     }
+
+    return articleResponse;
   } catch (err) {
     process.exit(1);
   }
 }
 
-// Fancy font intro
-cFonts.say('noticias|PR', {
-  font: 'block',
-  align: 'center',
-  colors: ['system'],
-  background: 'transparent',
-  letterSpacing: 1,
-  lineHeight: 1,
-  space: true,
-  maxLength: '0'
-});
+async function retrieveArticleData (article) {
+  const prepareArticleSpinner = ora('Cargando artículo...');
 
-// Entrypoint
-mainMenu();
+  // Get article data from Mercury
+  try {
+    prepareArticleSpinner.start();
+    const articleData = await Mercury.parse(article);
+    logger('Article Data: %O', articleData);
 
+    prepareArticleSpinner.succeed();
+
+    return articleData;
+  } catch (err) {
+    prepareArticleSpinner.fail(err.message);
+    process.exit(1);
+  }
+}
+
+async function retrieveArticleImage (article) {
+  // Verifies that the article parsed via Mercury has a lead image, and tries to fetch it
+  const imageLoadingSpinner = ora('Descargando y preparando imágen...');
+  try {
+    logger('Working on image: %s', article.lead_image_url);
+
+    imageLoadingSpinner.start();
+
+    // Fetch the image using the "got" package
+    const { body } = await got(article.lead_image_url, { encoding: null });
+
+    // Prepare the image for displaying it in the terminal
+    const articleImage = await terminalImage.buffer(body);
+    imageLoadingSpinner.succeed();
+
+    return articleImage;
+  } catch (err) {
+    imageLoadingSpinner.warn('No se pudo desplegar la imágen! ' + err.message);
+    return '';
+  }
+}
+
+/* istanbul ignore next */
+async function promptAfterArticle () {
+  const afterArticleResponse = await prompts({
+    message: 'Opción',
+    choices: [
+      { title: 'Regresar a noticieros', value: '1' },
+      { title: 'Regresar a artículos', value: '2' },
+      { title: 'Salir', value: '3' }
+    ]
+  });
+
+  return afterArticleResponse.value;
+}
+
+/* istanbul ignore next */
+async function performChosenAction (chosenAction, articlesAvailable) {
+  if (chosenAction === '1') {
+    // Go back to selecting a news site
+    await cliInitialMenu();
+  } else if (chosenAction === '2') {
+    // Go back to selecting an article
+    process.stdout.write(ansiEscapes.clearScreen);
+    await cliInitialMenu(articlesAvailable);
+  } else {
+    // Exit the CLI
+    exit();
+  }
+}
+
+/* istanbul ignore next */
+async function cliInitialMenu (articlesAvailable = null) {
+  // Menu for picking a news site. Outputs the article chosen by the user.
+  // If given an array of article choices, skips the step of choosing the site.
+  let articleData;
+  let articleImage;
+
+  // If there are no articles available, go through the whole process
+  if (articlesAvailable === null) {
+    try {
+      // Prompt for a news site
+      let newsSiteChoices = await retrieveNewsSiteChoices();
+      let chosenNewsSite = await promptForNewsSite(newsSiteChoices);
+
+      // Manual exit available
+      if (chosenNewsSite === 'exit') exit();
+
+      // If not testing, check network connectivity to the news site
+      if (process.env.NODE_ENV !== 'test') {
+        await checkConnectionToNewsSite(chosenNewsSite);
+      }
+
+      // Obtain available articles from the chosen news site
+      articlesAvailable = await retrieveArticlesAvailable(chosenNewsSite);
+    } catch (err) {
+      process.exit(1);
+    }
+  }
+
+  // At this point, there are articles available
+  try {
+    // Prompt for an article
+    let chosenArticle = await promptForArticle(articlesAvailable);
+
+    // Parse the article data and image (if possible)
+    articleData = await retrieveArticleData(chosenArticle.value);
+    articleImage = await retrieveArticleImage(articleData);
+  } catch (err) {
+    process.exit(1);
+  }
+
+  // Render the article in the terminal
+  printArticle(articleImage, articleData);
+
+  // After displaying the article, give choices on how to proceed
+  let chosenAction = await promptAfterArticle();
+
+  // Execute the choice
+  await performChosenAction(chosenAction, articlesAvailable);
+}
+
+/* istanbul ignore next */
+function entrypoint () {
+  // Fancy font intro
+  cFonts.say('noticias|PR', {
+    font: 'block',
+    align: 'center',
+    colors: ['system'],
+    background: 'transparent',
+    letterSpacing: 1,
+    lineHeight: 1,
+    space: true,
+    maxLength: '0'
+  });
+
+  // Start at the main menu
+  cliInitialMenu();
+}
+
+/* istanbul ignore if */
+if (process.env.NODE_ENV !== 'test') {
+  // Entrypoint to CLI
+  entrypoint();
+}
+
+// Export retrieval functions for testing purposes
 module.exports = {
-  chooseNewsSite,
-  chooseArticle,
-  prepareImage,
-  getArticle,
-  getNews,
-  mainMenu
+  retrieveNewsSiteChoices,
+  retrieveArticlesAvailable,
+  retrieveArticleData,
+  retrieveArticleImage
 };

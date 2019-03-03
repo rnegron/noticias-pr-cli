@@ -19,13 +19,13 @@ Esta aplicación fue creada con la intención de practicar NodeJS y para aprende
 - [Demo](#demo)
 - [Instalación](#instalación)
 - [Uso](#uso)
-- [Creditos](#creditos)
+- [Créditos](#créditos)
 - [Legal](#legal)
 - [Licencia](#licencia)
 
 ## Demo
 
-<p align="center"><img src="/img/cli-demo.gif" style="width: 30%; height: 30%"/></p>
+<p align="center"><img src="/img/cli-demo.gif" style="width: 25%; height: 25%"/></p>
 
 ## Instalación
 
@@ -57,8 +57,7 @@ Luego, seguir las instrucciones desplegadas en el terminal.
 En orden de añadición:
 
 1. El Nuevo Día: https://www.elnuevodia.com
-2. Primera Hora:
-3. Noticel:
+2. Primera Hora: https://www.primerahora.com
 
 ## Créditos
 
@@ -73,7 +72,6 @@ La applicación fue inspirada gracias a la existencia del [Mercury Parser](https
 - [is-reachable](https://github.com/sindresorhus/is-reachable) - Para confirmar que la página web seleccionada está accesible a través del internet.
 - [mercury-parser](https://github.com/postlight/mercury-parser) - Para encontrar información de intrés en un artículo.
 - [ora](https://github.com/sindresorhus/ora) - Para manejar los círculitos que dan vuelta mientras se espera.
-
 - [prompts](https://github.com/terkelg/prompts) - Para proveer interactividad en el terminal.
 - [terminal-image](https://github.com/sindresorhus/terminal-image) - Para desplegar imágenes en el terminal.
 - [terminal-link](https://github.com/sindresorhus/terminal-link) - Para verificar y desplegar enlaces en el terminal.
@@ -90,5 +88,4 @@ Qué se yo, contáctame y resolvemos sin problema.
 <p align="center">
 <br>
 	<img height="100" src="/img/pr.png" alt="Hecho en 🇵🇷" />
-
 </p>

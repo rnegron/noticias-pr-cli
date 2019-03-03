@@ -1,10 +1,10 @@
 {
   "name": "noticias-pr",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
-    "cli": "DEBUG=noticias-pr,noticieros:endi node cli.js",
-    "test": "nyc --all mocha",
+    "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora node cli.js",
+    "test": "NODE_ENV=test nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "main": "cli.js",
@@ -44,7 +44,7 @@
   },
   "nyc": {
     "include": [
-      "lib/**",
+      "lib/noticieros/**",
       "cli.js"
     ]
   },
@@ -52,23 +52,22 @@
     "@postlight/mercury-parser": "^2.0.0",
     "ansi-escapes": "^3.2.0",
     "cfonts": "^2.4.2",
-    "cli-truncate": "^1.1.0",
     "date-fns": "^1.30.1",
     "got": "^9.6.0",
     "html2plaintext": "^2.1.2",
     "is-reachable": "^3.0.0",
-    "ora": "^3.0.0",
-    "prompts": "^2.0.1",
-    "term-size": "^1.2.0",
+    "ora": "^3.1.0",
+    "prompts": "^2.0.3",
     "terminal-image": "^0.1.2",
     "terminal-link": "^1.2.0",
     "x-ray": "^2.3.3"
   },
   "devDependencies": {
-    "coveralls": "^3.0.2",
+    "coveralls": "^3.0.3",
     "debug": "^4.1.1",
     "mocha": "^5.2.0",
     "nock": "^10.0.6",
-    "nyc": "^13.2.0"
+    "nyc": "^13.3.0",
+    "sinon": "^7.2.6"
   }
 }
