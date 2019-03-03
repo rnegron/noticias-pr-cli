@@ -5,6 +5,7 @@ const path = require('path');
 
 const nock = require('nock');
 const expect = require('chai').expect;
+const terminalImage = require('terminal-image');
 const sandbox = require('sinon').createSandbox();
 const Mercury = require('@postlight/mercury-parser');
 
@@ -95,15 +96,22 @@ describe('retrieving the lead image from an article', function () {
       nock(imageUrl)
         .get('/')
         .reply(200, 'data');
+
+      sandbox.replace(terminalImage, 'buffer', function () {
+        return 'an image';
+      });
     });
 
-    it('works lol', async function () {
+    afterEach(function () {
+      sandbox.restore();
+    });
+
+    it('should obtain the image and return a buffer', async function () {
       const articleData = { lead_image_url: imageUrl };
       const processedImage = await cli.retrieveArticleImage(articleData);
-      console.log('type', typeof processedImage);
       expect(processedImage)
         .to.be.a('string')
-        .and.to.not.be.equal('');
+        .and.to.be.equal('an image');
     });
   });
 });
