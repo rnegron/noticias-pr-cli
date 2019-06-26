@@ -9,6 +9,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d8700b46efaa7e08a8f1/maintainability)](https://codeclimate.com/github/rnegron/noticias-pr-cli/maintainability)
 [![npm](https://img.shields.io/npm/v/noticias-pr.svg)](https://www.npmjs.com/package/noticias-pr)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
+[![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=rnegron/noticias-pr-cli)](https://dependabot.com)
 
 </p>
 
