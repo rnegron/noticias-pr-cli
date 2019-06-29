@@ -59,6 +59,7 @@ En orden de añadición:
 
 1. El Nuevo Día: https://www.elnuevodia.com
 2. Primera Hora: https://www.primerahora.com
+3. Noticel: https://www.noticel.com
 
 ## Créditos
 
