@@ -60,6 +60,7 @@ async function retrieveNewsSiteChoices () {
   return [
     { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
     { title: 'Primera Hora', value: 'www.primerahora.com' },
+    { title: 'Noticel', value: 'www.noticel.com' },
     { title: 'Salir', value: 'exit' }
   ];
 }
