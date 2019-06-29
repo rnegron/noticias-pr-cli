@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Añadir más sites
 
-  - [ ] noticel
+  - [x] noticel
   - [ ] vocero
   - [x] primera hora
   - [ ] índice
@@ -30,6 +30,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Other
 
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
+
+## [0.3.0] - 2019-06-29
+
+### Added
+
+- Obtener noticias de Noticel
+
+### Updated
+
+- Actualizar dependencias
 
 ## [0.2.2] - 2019-04-14
 

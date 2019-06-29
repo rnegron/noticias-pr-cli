@@ -6,7 +6,7 @@ const path = require('path');
 const nock = require('nock');
 const expect = require('chai').expect;
 const terminalImage = require('terminal-image');
-const sandbox = require('sinon').createSandbox();
+const sinon = require('sinon')
 const Mercury = require('@postlight/mercury-parser');
 
 // Module to test
@@ -53,7 +53,7 @@ describe('retrieving articles from a news site', function () {
 describe('retrieving parsed article data from an article', async function () {
   context('having already chosen an article from el nuevo dia', function () {
     beforeEach(function () {
-      sandbox.replace(Mercury, 'parse', function () {
+      sinon.stub(Mercury, 'parse').callsFake(() => {
         return {
           title: `Breaking: "Hacer pruebas en código dismunye los bugs"`,
           author: null,
@@ -73,10 +73,7 @@ describe('retrieving parsed article data from an article', async function () {
       });
     });
 
-    afterEach(function () {
-      sandbox.restore();
-    });
-
+  
     it('should return an object representing the parsed article', async function () {
       const articleData = await cli.retrieveArticleData('https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/');
 
@@ -85,33 +82,6 @@ describe('retrieving parsed article data from an article', async function () {
         .and.to.have.all.keys('title', 'author', 'date_published',
           'dek', 'lead_image_url', 'content', 'next_page_url', 'url',
           'domain', 'excerpt', 'word_count', 'direction', 'total_pages', 'rendered_pages');
-    });
-  });
-});
-
-describe('retrieving the lead image from an article', function () {
-  context('having already chosen an article from el nuevo dia', async function () {
-    const imageUrl = 'https://noticias.pr/primera/';
-    beforeEach(function () {
-      nock(imageUrl)
-        .get('/')
-        .reply(200, 'data');
-
-      sandbox.replace(terminalImage, 'buffer', function () {
-        return 'an image';
-      });
-    });
-
-    afterEach(function () {
-      sandbox.restore();
-    });
-
-    it('should obtain the image and return a buffer', async function () {
-      const articleData = { lead_image_url: imageUrl };
-      const processedImage = await cli.retrieveArticleImage(articleData);
-      expect(processedImage)
-        .to.be.a('string')
-        .and.to.be.equal('an image');
     });
   });
 });
