@@ -5,7 +5,9 @@
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel node cli.js",
     "test": "NODE_ENV=test nyc mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",
@@ -60,7 +62,8 @@
     "prompts": "^2.0.4",
     "terminal-image": "^0.2.0",
     "terminal-link": "^1.3.0",
-    "x-ray": "^2.3.3"
+    "x-ray": "^2.3.3",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.4",
@@ -69,5 +72,6 @@
     "nock": "^10.0.6",
     "nyc": "^14.1.1",
     "sinon": "^7.3.2"
-  }
+  },
+  "snyk": true
 }
