@@ -1,6 +1,6 @@
 {
   "name": "noticias-pr",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel node cli.js",
@@ -50,24 +50,24 @@
   },
   "dependencies": {
     "@postlight/mercury-parser": "^2.1.1",
-    "ansi-escapes": "^4.1.0",
-    "cfonts": "^2.4.2",
+    "ansi-escapes": "^4.2.1",
+    "cfonts": "^2.4.4",
     "date-fns": "^1.30.1",
     "got": "^9.6.0",
     "html2plaintext": "^2.1.2",
     "is-reachable": "^3.1.0",
     "ora": "^3.4.0",
-    "prompts": "^2.0.4",
+    "prompts": "^2.2.1",
     "terminal-image": "^0.2.0",
     "terminal-link": "^1.3.0",
-    "x-ray": "^2.3.3"
+    "x-ray": "^2.3.4"
   },
   "devDependencies": {
-    "coveralls": "^3.0.4",
+    "coveralls": "^3.0.6",
     "debug": "^4.1.1",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "nock": "^10.0.6",
     "nyc": "^14.1.1",
-    "sinon": "^7.3.2"
+    "sinon": "^7.4.1"
   }
 }
