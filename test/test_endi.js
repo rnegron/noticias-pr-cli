@@ -31,13 +31,13 @@ describe('parsing el nuevo dia articles', function () {
         .to.be.an('array')
         .and.have.lengthOf(1);
 
-      for (let article of response) {
+      for (const article of response) {
         expect(article)
           .to.be.an('object')
           .and.to.have.all.keys('title', 'summary', 'image', 'link');
 
         expect(article.title).to.be.equal(
-          `Breaking: "Hacer pruebas en código dismunye los bugs"`
+          'Breaking: "Hacer pruebas en código dismunye los bugs"'
         );
 
         expect(article.summary).to.be.equal('Vale la pena');
@@ -63,7 +63,7 @@ describe('parsing el nuevo dia articles', function () {
         .to.be.an('array')
         .and.to.have.lengthOf(2);
 
-      for (let article of response) {
+      for (const article of response) {
         expect(article)
           .to.be.an('object')
           .and.to.have.all.keys('title', 'summary', 'link');

@@ -28,13 +28,13 @@ describe('parsing primera hora articles', function () {
       expect(response)
         .to.be.an('array')
         .and.have.lengthOf(3);
-      for (let article of response) {
+      for (const article of response) {
         expect(article)
           .to.be.an('object')
           .and.to.have.all.keys('title', 'link');
       }
       expect(response[0].title).to.be.equal(
-        `Breaking: "Hacer pruebas en código dismunye los bugs"`
+        'Breaking: "Hacer pruebas en código dismunye los bugs"'
       );
       expect(response[0].link).to.be.equal(
         'https://www.primerahora.com/noticias/pruebas-codigo-menos-bugs/'

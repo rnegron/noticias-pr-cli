@@ -6,7 +6,7 @@ const path = require('path');
 const nock = require('nock');
 const expect = require('chai').expect;
 const terminalImage = require('terminal-image');
-const sinon = require('sinon')
+const sinon = require('sinon');
 const Mercury = require('@postlight/mercury-parser');
 
 // Module to test
@@ -17,7 +17,7 @@ describe('retrieving news site choices', function () {
     const newsSiteChoices = await cli.retrieveNewsSiteChoices();
     expect(newsSiteChoices).to.be.an('array');
 
-    for (let newsSiteChoice of newsSiteChoices) {
+    for (const newsSiteChoice of newsSiteChoices) {
       expect(newsSiteChoice).to.have.all.keys('title', 'value');
     }
   });
@@ -25,9 +25,9 @@ describe('retrieving news site choices', function () {
 
 describe('retrieving articles from a news site', function () {
   context('chose el nuevo dia', function () {
-    let html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
-    let siteUrl = 'https://www.elnuevodia.com/';
-    let site = 'www.elnuevodia.com';
+    const html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
+    const siteUrl = 'https://www.elnuevodia.com/';
+    const site = 'www.elnuevodia.com';
     beforeEach(function () {
       nock(siteUrl)
         .persist()
@@ -55,7 +55,7 @@ describe('retrieving parsed article data from an article', async function () {
     beforeEach(function () {
       sinon.stub(Mercury, 'parse').callsFake(() => {
         return {
-          title: `Breaking: "Hacer pruebas en código dismunye los bugs"`,
+          title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
           author: null,
           date_published: '2019-03-03T04:00:00.000Z',
           dek: null,
@@ -73,7 +73,6 @@ describe('retrieving parsed article data from an article', async function () {
       });
     });
 
-  
     it('should return an object representing the parsed article', async function () {
       const articleData = await cli.retrieveArticleData('https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/');
 

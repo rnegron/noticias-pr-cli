@@ -10,16 +10,15 @@ const terminalLink = require('terminal-link');
 const terminalImage = require('terminal-image');
 
 const cFonts = require('cfonts');
-const { format, parseISO} = require('date-fns');
+const { format, parseISO } = require('date-fns');
 const logger = require('debug')('noticias-pr');
 const htmlToPlainText = require('html2plaintext');
 const Mercury = require('@postlight/mercury-parser');
 
 // Custom modules
-const exit = require('./lib/exit')
+const exit = require('./lib/exit');
 const prompts = require('./lib/prompts');
 const retrieveArticlesFromNewsSite = require('./lib/noticieros');
-
 
 /* istanbul ignore next */
 function printArticle (articleImage, article) {
@@ -40,7 +39,7 @@ function printArticle (articleImage, article) {
 async function checkConnectionToNewsSite (chosenNewsSite) {
   const reachableSpinner = ora('Verificando conneción...').start();
 
-  let siteIsReachable = await isReachable(chosenNewsSite);
+  const siteIsReachable = await isReachable(chosenNewsSite);
   if (siteIsReachable === true) {
     reachableSpinner.succeed();
   } else {
@@ -82,7 +81,7 @@ async function retrieveArticlesAvailable (chosenNewsSite) {
   try {
     const articles = await retrieveArticlesFromNewsSite(chosenNewsSite);
 
-    for (let article of articles) {
+    for (const article of articles) {
       logger('Article: %O', article);
       articleChoices.push({
         title: article.title,
@@ -207,8 +206,8 @@ async function cliInitialMenu (articlesAvailable = null) {
   if (articlesAvailable === null) {
     try {
       // Prompt for a news site
-      let newsSiteChoices = await retrieveNewsSiteChoices();
-      let chosenNewsSite = await promptForNewsSite(newsSiteChoices);
+      const newsSiteChoices = await retrieveNewsSiteChoices();
+      const chosenNewsSite = await promptForNewsSite(newsSiteChoices);
 
       // Manual exit available
       if (chosenNewsSite === 'exit') exit();
@@ -228,7 +227,7 @@ async function cliInitialMenu (articlesAvailable = null) {
   // At this point, there are articles available
   try {
     // Prompt for an article
-    let chosenArticle = await promptForArticle(articlesAvailable);
+    const chosenArticle = await promptForArticle(articlesAvailable);
 
     // Parse the article data and image (if possible)
     articleData = await retrieveArticleData(chosenArticle.value);
@@ -241,7 +240,7 @@ async function cliInitialMenu (articlesAvailable = null) {
   printArticle(articleImage, articleData);
 
   // After displaying the article, give choices on how to proceed
-  let chosenAction = await promptAfterArticle();
+  const chosenAction = await promptAfterArticle();
 
   // Execute the choice
   await performChosenAction(chosenAction, articlesAvailable);

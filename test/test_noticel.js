@@ -25,14 +25,14 @@ describe('parsing noticel articles', function () {
 
       console.log('response leading:', response);
 
-      for (let article of response) {
+      for (const article of response) {
         expect(article)
           .to.be.an('object')
           .and.to.have.all.keys('title', 'link');
       }
 
       expect(response[0].title).to.be.equal(
-        `Breaking: "Hacer pruebas en código dismunye los bugs"`
+        'Breaking: "Hacer pruebas en código dismunye los bugs"'
       );
       expect(response[0].link).to.be.equal(
         'https://www.noticel.com/pruebas-codigo-menos-bugs/'
