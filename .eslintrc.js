@@ -6,7 +6,8 @@ module.exports = {
         "mocha": true
     },
     "extends": [
-        "semistandard"
+        "semistandard",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
