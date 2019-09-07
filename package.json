@@ -6,7 +6,7 @@
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel node cli.js",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint cli.js lib/** test/**",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls"
   },
   "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",

@@ -5,7 +5,6 @@ const path = require('path');
 
 const nock = require('nock');
 const expect = require('chai').expect;
-const terminalImage = require('terminal-image');
 const sinon = require('sinon');
 const Mercury = require('@postlight/mercury-parser');
 
