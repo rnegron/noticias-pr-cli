@@ -10,21 +10,16 @@ const terminalLink = require('terminal-link');
 const terminalImage = require('terminal-image');
 
 const cFonts = require('cfonts');
-const formatDate = require('date-fns').format;
+const { format, parseISO} = require('date-fns');
 const logger = require('debug')('noticias-pr');
 const htmlToPlainText = require('html2plaintext');
 const Mercury = require('@postlight/mercury-parser');
 
 // Custom modules
+const exit = require('./lib/exit')
 const prompts = require('./lib/prompts');
 const retrieveArticlesFromNewsSite = require('./lib/noticieros');
 
-/* istanbul ignore next */
-function exit () {
-  // Clear the terminal screen and exit the application manually
-  process.stdout.write(ansiEscapes.clearScreen);
-  process.exit(0);
-}
 
 /* istanbul ignore next */
 function printArticle (articleImage, article) {
@@ -33,7 +28,7 @@ function printArticle (articleImage, article) {
     ${articleImage}
     \n
     \t\t\tTítulo: ${article.title}
-    \t\t\tPublicado: ${formatDate(article.date_published, 'D/M/YYYY')}
+    \t\t\tPublicado: ${format(parseISO(article.date_published), 'd/M/yyyy')}
     \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
     \n\n
     ${htmlToPlainText(article.content)}
