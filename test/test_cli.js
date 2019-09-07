@@ -12,8 +12,8 @@ const Mercury = require('@postlight/mercury-parser');
 // Module to test
 const cli = require('../cli');
 
-describe('retrieving news site choices', function () {
-  it('should return an array of objects with particular keys', async function () {
+describe('retrieving news site choices', function() {
+  it('should return an array of objects with particular keys', async function() {
     const newsSiteChoices = await cli.retrieveNewsSiteChoices();
     expect(newsSiteChoices).to.be.an('array');
 
@@ -23,19 +23,19 @@ describe('retrieving news site choices', function () {
   });
 });
 
-describe('retrieving articles from a news site', function () {
-  context('chose el nuevo dia', function () {
+describe('retrieving articles from a news site', function() {
+  context('chose el nuevo dia', function() {
     const html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
     const siteUrl = 'https://www.elnuevodia.com/';
     const site = 'www.elnuevodia.com';
-    beforeEach(function () {
+    beforeEach(function() {
       nock(siteUrl)
         .persist()
         .get('/')
         .reply(200, html);
     });
 
-    it('should return three articles with respective URLs', async function () {
+    it('should return three articles with respective URLs', async function() {
       const articlesAvailable = await cli.retrieveArticlesAvailable(site);
       expect(articlesAvailable)
         .to.be.an('array')
@@ -50,9 +50,9 @@ describe('retrieving articles from a news site', function () {
   });
 });
 
-describe('retrieving parsed article data from an article', async function () {
-  context('having already chosen an article from el nuevo dia', function () {
-    beforeEach(function () {
+describe('retrieving parsed article data from an article', async function() {
+  context('having already chosen an article from el nuevo dia', function() {
+    beforeEach(function() {
       sinon.stub(Mercury, 'parse').callsFake(() => {
         return {
           title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
@@ -68,19 +68,34 @@ describe('retrieving parsed article data from an article', async function () {
           word_count: 0,
           direction: 'ltr',
           total_pages: 1,
-          rendered_pages: 1
+          rendered_pages: 1,
         };
       });
     });
 
-    it('should return an object representing the parsed article', async function () {
-      const articleData = await cli.retrieveArticleData('https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/');
+    it('should return an object representing the parsed article', async function() {
+      const articleData = await cli.retrieveArticleData(
+        'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
+      );
 
       expect(articleData)
         .to.be.an('object')
-        .and.to.have.all.keys('title', 'author', 'date_published',
-          'dek', 'lead_image_url', 'content', 'next_page_url', 'url',
-          'domain', 'excerpt', 'word_count', 'direction', 'total_pages', 'rendered_pages');
+        .and.to.have.all.keys(
+          'title',
+          'author',
+          'date_published',
+          'dek',
+          'lead_image_url',
+          'content',
+          'next_page_url',
+          'url',
+          'domain',
+          'excerpt',
+          'word_count',
+          'direction',
+          'total_pages',
+          'rendered_pages'
+        );
     });
   });
 });

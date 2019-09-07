@@ -21,7 +21,7 @@ const prompts = require('./lib/prompts');
 const retrieveArticlesFromNewsSite = require('./lib/noticieros');
 
 /* istanbul ignore next */
-function printArticle (articleImage, article) {
+function printArticle(articleImage, article) {
   console.log(`
     \n
     ${articleImage}
@@ -36,7 +36,7 @@ function printArticle (articleImage, article) {
 }
 
 /* istanbul ignore next */
-async function checkConnectionToNewsSite (chosenNewsSite) {
+async function checkConnectionToNewsSite(chosenNewsSite) {
   const reachableSpinner = ora('Verificando conneción...').start();
 
   const siteIsReachable = await isReachable(chosenNewsSite);
@@ -50,20 +50,20 @@ async function checkConnectionToNewsSite (chosenNewsSite) {
   }
 }
 
-async function retrieveNewsSiteChoices () {
+async function retrieveNewsSiteChoices() {
   return [
     { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
     { title: 'Primera Hora', value: 'www.primerahora.com' },
     { title: 'Noticel', value: 'www.noticel.com' },
-    { title: 'Salir', value: 'exit' }
+    { title: 'Salir', value: 'exit' },
   ];
 }
 
 /* istanbul ignore next */
-async function promptForNewsSite (newsSiteChoices) {
+async function promptForNewsSite(newsSiteChoices) {
   const newsSiteChoice = await prompts({
     message: 'Escoge un noticiero',
-    choices: newsSiteChoices
+    choices: newsSiteChoices,
   });
 
   logger('newsSiteChoice: %O', newsSiteChoice);
@@ -71,7 +71,7 @@ async function promptForNewsSite (newsSiteChoices) {
   return newsSiteChoice.value;
 }
 
-async function retrieveArticlesAvailable (chosenNewsSite) {
+async function retrieveArticlesAvailable(chosenNewsSite) {
   // return candidate articles given a news site
   const articleChoices = [];
 
@@ -85,7 +85,7 @@ async function retrieveArticlesAvailable (chosenNewsSite) {
       logger('Article: %O', article);
       articleChoices.push({
         title: article.title,
-        value: article.link
+        value: article.link,
       });
     }
 
@@ -101,7 +101,7 @@ async function retrieveArticlesAvailable (chosenNewsSite) {
 }
 
 /* istanbul ignore next */
-async function promptForArticle (articleChoices) {
+async function promptForArticle(articleChoices) {
   // Prompt the user to select an article given some choices
   process.stdout.write(ansiEscapes.clearScreen);
 
@@ -110,7 +110,7 @@ async function promptForArticle (articleChoices) {
   try {
     const articleResponse = await prompts({
       message: 'Escoge un artículo',
-      choices: articleChoices
+      choices: articleChoices,
     });
 
     logger('Article choices response: %O', articleResponse);
@@ -126,7 +126,7 @@ async function promptForArticle (articleChoices) {
   }
 }
 
-async function retrieveArticleData (article) {
+async function retrieveArticleData(article) {
   const prepareArticleSpinner = ora('Cargando artículo...');
 
   // Get article data from Mercury
@@ -144,7 +144,7 @@ async function retrieveArticleData (article) {
   }
 }
 
-async function retrieveArticleImage (article) {
+async function retrieveArticleImage(article) {
   // Verifies that the article parsed via Mercury has a lead image, and tries to fetch it
   const imageLoadingSpinner = ora('Descargando y preparando imágen...');
   try {
@@ -167,21 +167,21 @@ async function retrieveArticleImage (article) {
 }
 
 /* istanbul ignore next */
-async function promptAfterArticle () {
+async function promptAfterArticle() {
   const afterArticleResponse = await prompts({
     message: 'Opción',
     choices: [
       { title: 'Regresar a noticieros', value: '1' },
       { title: 'Regresar a artículos', value: '2' },
-      { title: 'Salir', value: '3' }
-    ]
+      { title: 'Salir', value: '3' },
+    ],
   });
 
   return afterArticleResponse.value;
 }
 
 /* istanbul ignore next */
-async function performChosenAction (chosenAction, articlesAvailable) {
+async function performChosenAction(chosenAction, articlesAvailable) {
   if (chosenAction === '1') {
     // Go back to selecting a news site
     await cliInitialMenu();
@@ -196,7 +196,7 @@ async function performChosenAction (chosenAction, articlesAvailable) {
 }
 
 /* istanbul ignore next */
-async function cliInitialMenu (articlesAvailable = null) {
+async function cliInitialMenu(articlesAvailable = null) {
   // Menu for picking a news site. Outputs the article chosen by the user.
   // If given an array of article choices, skips the step of choosing the site.
   let articleData;
@@ -247,7 +247,7 @@ async function cliInitialMenu (articlesAvailable = null) {
 }
 
 /* istanbul ignore next */
-function entrypoint () {
+function entrypoint() {
   // Fancy font intro
   cFonts.say('noticias|PR', {
     font: 'block',
@@ -257,7 +257,7 @@ function entrypoint () {
     letterSpacing: 1,
     lineHeight: 1,
     space: true,
-    maxLength: '0'
+    maxLength: '0',
   });
 
   // Start at the main menu
@@ -275,5 +275,5 @@ module.exports = {
   retrieveNewsSiteChoices,
   retrieveArticlesAvailable,
   retrieveArticleData,
-  retrieveArticleImage
+  retrieveArticleImage,
 };

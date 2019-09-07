@@ -6,8 +6,8 @@ const xray = require('../lib/xray');
 
 const siteUrl = 'https://www.noticel.com/';
 
-describe('parsing noticel articles', function () {
-  context('having internet connection and articles being available', function () {
+describe('parsing noticel articles', function() {
+  context('having internet connection and articles being available', function() {
     const html = fs.readFileSync(path.join(__dirname, 'noticel.html'), 'utf8');
     beforeEach(() => {
       nock(siteUrl)
@@ -15,12 +15,12 @@ describe('parsing noticel articles', function () {
         .reply(200, html);
     });
 
-    it('should return the leading articles', async function () {
+    it('should return the leading articles', async function() {
       const response = await xray(siteUrl, '.mod-content .story-wrapper .headline', [
         {
           title: 'a | trim | parse',
-          link: 'a@href | trim'
-        }
+          link: 'a@href | trim',
+        },
       ]);
 
       console.log('response leading:', response);

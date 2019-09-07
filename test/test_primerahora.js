@@ -6,8 +6,8 @@ const xray = require('../lib/xray');
 
 const siteUrl = 'https://www.primerahora.com/noticias/';
 
-describe('parsing primera hora articles', function () {
-  context('having internet connection and articles being available', function () {
+describe('parsing primera hora articles', function() {
+  context('having internet connection and articles being available', function() {
     const html = fs.readFileSync(path.join(__dirname, 'primerahora.html'), 'utf8');
     beforeEach(() => {
       nock(siteUrl)
@@ -15,15 +15,13 @@ describe('parsing primera hora articles', function () {
         .reply(200, html);
     });
 
-    it('should return the articles', async function () {
-      const response = await xray(
-        siteUrl,
-        '.main-content .noticias article', [
-          {
-            title: 'h2 a | trim',
-            link: 'h2 a@href | trim'
-          }
-        ]);
+    it('should return the articles', async function() {
+      const response = await xray(siteUrl, '.main-content .noticias article', [
+        {
+          title: 'h2 a | trim',
+          link: 'h2 a@href | trim',
+        },
+      ]);
 
       expect(response)
         .to.be.an('array')

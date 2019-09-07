@@ -6,8 +6,8 @@ const xray = require('../lib/xray');
 
 const siteUrl = 'https://www.elnuevodia.com';
 
-describe('parsing el nuevo dia articles', function () {
-  context('having internet connection and articles being available', function () {
+describe('parsing el nuevo dia articles', function() {
+  context('having internet connection and articles being available', function() {
     const html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
     beforeEach(() => {
       nock(siteUrl)
@@ -15,17 +15,19 @@ describe('parsing el nuevo dia articles', function () {
         .reply(200, html);
     });
 
-    it('should return the leading article', async function () {
+    it('should return the leading article', async function() {
       const response = await xray(
         siteUrl,
-        '.bk4-8of12 .featured-stories-primary article', [
+        '.bk4-8of12 .featured-stories-primary article',
+        [
           {
             title: '.story-tease-title a | trim',
             summary: '.story-tease-summary p | trim',
             image: '.story-tease-image a img@src | trim',
-            link: '.story-tease-title a@href | trim'
-          }
-        ]);
+            link: '.story-tease-title a@href | trim',
+          },
+        ]
+      );
 
       expect(response)
         .to.be.an('array')
@@ -48,16 +50,18 @@ describe('parsing el nuevo dia articles', function () {
       }
     });
 
-    it('should return the secondary articles', async function () {
+    it('should return the secondary articles', async function() {
       const response = await xray(
         siteUrl,
-        '.bk4-8of12 .featured-stories-secondary article', [
+        '.bk4-8of12 .featured-stories-secondary article',
+        [
           {
             title: '.story-tease-title a | trim',
             summary: '.story-tease-summary p | trim',
-            link: '.story-tease-title a@href | trim'
-          }
-        ]);
+            link: '.story-tease-title a@href | trim',
+          },
+        ]
+      );
 
       expect(response)
         .to.be.an('array')
