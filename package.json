@@ -1,6 +1,6 @@
 {
   "name": "noticias-pr",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel node cli.js",
@@ -50,35 +50,35 @@
     ]
   },
   "dependencies": {
-    "@postlight/mercury-parser": "^2.1.1",
+    "@postlight/mercury-parser": "^2.2.0",
     "ansi-escapes": "^4.2.1",
     "cfonts": "^2.4.5",
-    "date-fns": "^2.1.0",
+    "date-fns": "^2.6.0",
     "got": "^9.6.0",
     "html2plaintext": "^2.1.2",
-    "is-reachable": "^3.1.0",
-    "ora": "^3.4.0",
+    "is-reachable": "^4.0.0",
+    "ora": "^4.0.2",
     "prompts": "^2.2.1",
     "terminal-image": "^0.2.0",
     "terminal-link": "^2.0.0",
     "x-ray": "^2.3.4"
   },
   "devDependencies": {
-    "coveralls": "^3.0.6",
+    "coveralls": "^3.0.7",
     "debug": "^4.1.1",
-    "eslint": "^6.3.0",
-    "eslint-config-prettier": "^6.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^6.2.0",
-    "nock": "^11.3.3",
+    "mocha": "^6.2.2",
+    "nock": "^11.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "sinon": "^7.4.2"
+    "sinon": "^7.5.0"
   }
 }
