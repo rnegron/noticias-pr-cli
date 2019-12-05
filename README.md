@@ -30,7 +30,7 @@ Esta aplicación fue creada con la intención de practicar NodeJS y para aprende
 
 ## Instalación
 
-Asegurate tener [NodeJS](https://nodejs.org/en/) versión 8 en adelante.
+Asegurate tener [NodeJS](https://nodejs.org/en/) versión 10 en adelante.
 
 ```bash
 $ npm install -g noticias-pr
