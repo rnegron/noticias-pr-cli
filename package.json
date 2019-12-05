@@ -54,7 +54,7 @@
     "ansi-escapes": "^4.2.1",
     "cfonts": "^2.4.5",
     "date-fns": "^2.6.0",
-    "got": "^9.6.0",
+    "got": "^10.0.1",
     "html2plaintext": "^2.1.2",
     "is-reachable": "^4.0.0",
     "ora": "^4.0.2",
@@ -64,10 +64,10 @@
     "x-ray": "^2.3.4"
   },
   "devDependencies": {
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.9",
     "debug": "^4.1.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -76,9 +76,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.2",
-    "nock": "^11.6.0",
+    "nock": "^11.7.0",
     "nyc": "^14.1.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "sinon": "^7.5.0"
   }
 }
