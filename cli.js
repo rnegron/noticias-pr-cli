@@ -153,10 +153,10 @@ async function retrieveArticleImage(article) {
     imageLoadingSpinner.start();
 
     // Fetch the image using the "got" package
-    const { body } = await got(article.lead_image_url, { encoding: null });
+    const response = await got(article.lead_image_url).buffer();
 
     // Prepare the image for displaying it in the terminal
-    const articleImage = await terminalImage.buffer(body);
+    const articleImage = await terminalImage.buffer(response);
     imageLoadingSpinner.succeed();
 
     return articleImage;
