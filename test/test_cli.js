@@ -94,10 +94,6 @@ describe('retrieving parsed article data from an article', async function() {
           rendered_pages: 1,
         };
       });
-
-      nock('https://noticias.pr/primera')
-        .get('/flag.png')
-        .replyWithFile(200, path.join(__dirname, 'files', 'flag.png'));
     });
 
     afterEach(function() {
@@ -130,13 +126,17 @@ describe('retrieving parsed article data from an article', async function() {
     });
 
     it('should obtain the article lead image', async function() {
+      const imageScope = nock('https://noticias.pr/primera')
+        .get('/flag.png')
+        .replyWithFile(200, path.join(__dirname, 'files', 'flag.png'));
+
       const articleData = await cli.retrieveArticleData(
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
       );
 
       const articleImage = await cli.retrieveArticleImage(articleData);
 
-      expect(nock.isDone()).to.be.true();
+      expect(imageScope.isDone()).to.equal(true);
       expect(articleImage).to.have.string('File=inline=1;width=100%;height=100%');
     });
   });
