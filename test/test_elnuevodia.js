@@ -16,7 +16,6 @@ describe('parsing el nuevo dia articles', function() {
     beforeEach(() => {
       nock(siteUrl)
         .get('/')
-        .twice()
         .reply(200, html);
     });
 
@@ -86,7 +85,6 @@ describe('parsing el nuevo dia articles', function() {
     beforeEach(() => {
       nock(siteUrl)
         .get('/')
-        .twice()
         .reply(200, html);
     });
 
