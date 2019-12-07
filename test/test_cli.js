@@ -75,7 +75,7 @@ describe('retrieving parsed article data from an article', async function() {
   });
 
   context('having already chosen an article from el nuevo dia', function() {
-    beforeEach(function() {
+    before(function() {
       sinon.stub(Mercury, 'parse').callsFake(() => {
         return {
           title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
