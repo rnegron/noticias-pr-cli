@@ -30,7 +30,7 @@ describe('parsing el nuevo dia articles', function() {
       const leadingArticle = response[0];
       expect(leadingArticle)
         .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link');
+        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
 
       expect(leadingArticle.title).to.be.equal(
         'Breaking: "Hacer pruebas en código dismunye los bugs"'
@@ -48,7 +48,7 @@ describe('parsing el nuevo dia articles', function() {
       const firstSecondaryArticle = response[1];
       expect(firstSecondaryArticle)
         .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link');
+        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
       expect(firstSecondaryArticle.title).to.be.equal(
         'El representante de la cámara de pruebas guíaba carro hurtado'
       );
@@ -63,7 +63,7 @@ describe('parsing el nuevo dia articles', function() {
       const secondSecondaryArticle = response[2];
       expect(secondSecondaryArticle)
         .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link');
+        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
 
       expect(secondSecondaryArticle.title).to.be.equal(
         'Mejoran las pruebas en la capital de Pruebalandia'
@@ -75,6 +75,27 @@ describe('parsing el nuevo dia articles', function() {
       expect(secondSecondaryArticle.link).to.be.equal(
         'https://www.elnuevodia.com/noticias/pruebalandia-mejora/'
       );
+    });
+  });
+
+  context('paywalled articles being available', function() {
+    const html = fs.readFileSync(
+      path.join(__dirname, 'files', 'elnuevodia-paywall.html'),
+      'utf8'
+    );
+    beforeEach(() => {
+      nock(siteUrl)
+        .get('/')
+        .twice()
+        .reply(200, html);
+    });
+
+    it('should not return articles which are behind a paywall', async function() {
+      const response = await siteParser();
+
+      expect(response)
+        .to.be.an('array')
+        .and.have.lengthOf(2);
     });
   });
 });
