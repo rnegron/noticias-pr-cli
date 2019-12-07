@@ -79,7 +79,7 @@ async function retrieveArticlesAvailable(chosenNewsSite) {
 
   articleLoadingSpinner.start();
   try {
-    const articles = await retrieveArticlesFromNewsSite(chosenNewsSite);
+    const articles = await retrieveArticlesFromNewsSite[chosenNewsSite]();
 
     for (const article of articles) {
       logger('Article: %O', article);
