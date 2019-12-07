@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const expect = require('chai').expect;
 const nock = require('nock');
-const xray = require('../lib/xray');
+
+const siteParser = require('../lib/noticieros/noticel');
 
 const siteUrl = 'https://www.noticel.com/';
 
@@ -16,14 +17,7 @@ describe('parsing noticel articles', function() {
     });
 
     it('should return the leading articles', async function() {
-      const response = await xray(siteUrl, '.mod-content .story-wrapper .headline', [
-        {
-          title: 'a | trim | parse',
-          link: 'a@href | trim',
-        },
-      ]);
-
-      console.log('response leading:', response);
+      const response = await siteParser();
 
       for (const article of response) {
         expect(article)

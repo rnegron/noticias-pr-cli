@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const expect = require('chai').expect;
 const nock = require('nock');
-const xray = require('../lib/xray');
+
+const siteParser = require('../lib/noticieros/elnuevodia');
 
 const siteUrl = 'https://www.elnuevodia.com';
 
@@ -15,66 +16,65 @@ describe('parsing el nuevo dia articles', function() {
     beforeEach(() => {
       nock(siteUrl)
         .get('/')
+        .twice()
         .reply(200, html);
     });
 
     it('should return the leading article', async function() {
-      const response = await xray(
-        siteUrl,
-        '.bk4-8of12 .featured-stories-primary article',
-        [
-          {
-            title: '.story-tease-title a | trim',
-            summary: '.story-tease-summary p | trim',
-            image: '.story-tease-image a img@src | trim',
-            link: '.story-tease-title a@href | trim',
-          },
-        ]
-      );
+      const response = await siteParser();
 
       expect(response)
         .to.be.an('array')
-        .and.have.lengthOf(1);
+        .and.have.lengthOf(3);
 
-      for (const article of response) {
-        expect(article)
-          .to.be.an('object')
-          .and.to.have.all.keys('title', 'summary', 'image', 'link');
+      const leadingArticle = response[0];
+      expect(leadingArticle)
+        .to.be.an('object')
+        .and.to.have.all.keys('title', 'summary', 'link');
 
-        expect(article.title).to.be.equal(
-          'Breaking: "Hacer pruebas en código dismunye los bugs"'
-        );
+      expect(leadingArticle.title).to.be.equal(
+        'Breaking: "Hacer pruebas en código dismunye los bugs"'
+      );
 
-        expect(article.summary).to.be.equal('Vale la pena');
-        expect(article.image).to.be.equal('https://noticias.pr/primera');
-        expect(article.link).to.be.equal(
-          'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs'
-        );
-      }
+      expect(leadingArticle.summary).to.be.equal('Vale la pena');
+      expect(leadingArticle.link).to.be.equal(
+        'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs'
+      );
     });
 
     it('should return the secondary articles', async function() {
-      const response = await xray(
-        siteUrl,
-        '.bk4-8of12 .featured-stories-secondary article',
-        [
-          {
-            title: '.story-tease-title a | trim',
-            summary: '.story-tease-summary p | trim',
-            link: '.story-tease-title a@href | trim',
-          },
-        ]
+      const response = await siteParser();
+
+      const firstSecondaryArticle = response[1];
+      expect(firstSecondaryArticle)
+        .to.be.an('object')
+        .and.to.have.all.keys('title', 'summary', 'link');
+      expect(firstSecondaryArticle.title).to.be.equal(
+        'El representante de la cámara de pruebas guíaba carro hurtado'
+      );
+      expect(firstSecondaryArticle.summary).to.be.equal(
+        `El individuo invadió el carril contrario de la PR-UEBA,
+                      ocasionando el choque de otras cinco pruebas.`
+      );
+      expect(firstSecondaryArticle.link).to.be.equal(
+        'https://www.elnuevodia.com/noticias/representante-guiaba-carro-robado/'
       );
 
-      expect(response)
-        .to.be.an('array')
-        .and.to.have.lengthOf(2);
+      const secondSecondaryArticle = response[2];
+      expect(secondSecondaryArticle)
+        .to.be.an('object')
+        .and.to.have.all.keys('title', 'summary', 'link');
 
-      for (const article of response) {
-        expect(article)
-          .to.be.an('object')
-          .and.to.have.all.keys('title', 'summary', 'link');
-      }
+      expect(secondSecondaryArticle.title).to.be.equal(
+        'Mejoran las pruebas en la capital de Pruebalandia'
+      );
+
+      expect(secondSecondaryArticle.summary).to.be.equal(
+        'La presidente de Pruebalandia se expresó'
+      );
+      expect(secondSecondaryArticle.link).to.be.equal(
+        'https://www.elnuevodia.com/noticias/pruebalandia-mejora/'
+      );
     });
   });
 });

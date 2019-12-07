@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const expect = require('chai').expect;
 const nock = require('nock');
-const xray = require('../lib/xray');
+
+const siteParser = require('../lib/noticieros/primerahora');
 
 const siteUrl = 'https://www.primerahora.com/noticias/';
 
@@ -19,12 +20,7 @@ describe('parsing primera hora articles', function() {
     });
 
     it('should return the articles', async function() {
-      const response = await xray(siteUrl, '.main-content .noticias article', [
-        {
-          title: 'h2 a | trim',
-          link: 'h2 a@href | trim',
-        },
-      ]);
+      const response = await siteParser();
 
       expect(response)
         .to.be.an('array')
