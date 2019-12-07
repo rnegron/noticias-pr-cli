@@ -23,15 +23,31 @@ describe('retrieving news site choices', function() {
 });
 
 describe('retrieving articles from a news site', function() {
+  before(function() {
+    nock.disableNetConnect();
+  });
+
+  after(function() {
+    nock.enableNetConnect();
+  });
+
   context('chose el nuevo dia', function() {
-    const html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
+    const html = fs.readFileSync(
+      path.join(__dirname, 'files', 'elnuevodia.html'),
+      'utf8'
+    );
     const siteUrl = 'https://www.elnuevodia.com/';
     const site = 'www.elnuevodia.com';
+
     beforeEach(function() {
       nock(siteUrl)
         .persist()
         .get('/')
         .reply(200, html);
+    });
+
+    afterEach(function() {
+      nock.cleanAll();
     });
 
     it('should return three articles with respective URLs', async function() {
@@ -50,6 +66,14 @@ describe('retrieving articles from a news site', function() {
 });
 
 describe('retrieving parsed article data from an article', async function() {
+  before(function() {
+    nock.disableNetConnect();
+  });
+
+  after(function() {
+    nock.enableNetConnect();
+  });
+
   context('having already chosen an article from el nuevo dia', function() {
     beforeEach(function() {
       sinon.stub(Mercury, 'parse').callsFake(() => {
@@ -58,7 +82,7 @@ describe('retrieving parsed article data from an article', async function() {
           author: null,
           date_published: '2019-03-03T04:00:00.000Z',
           dek: null,
-          lead_image_url: 'https://noticias.pr/primera',
+          lead_image_url: 'https://noticias.pr/primera/flag.png',
           content: '',
           next_page_url: null,
           url: 'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/',
@@ -70,6 +94,14 @@ describe('retrieving parsed article data from an article', async function() {
           rendered_pages: 1,
         };
       });
+
+      nock('https://noticias.pr/primera')
+        .get('/flag.png')
+        .replyWithFile(200, path.join(__dirname, 'files', 'flag.png'));
+    });
+
+    afterEach(function() {
+      nock.cleanAll();
     });
 
     it('should return an object representing the parsed article', async function() {
@@ -95,6 +127,17 @@ describe('retrieving parsed article data from an article', async function() {
           'total_pages',
           'rendered_pages'
         );
+    });
+
+    it('should obtain the article lead image', async function() {
+      const articleData = await cli.retrieveArticleData(
+        'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
+      );
+
+      const articleImage = await cli.retrieveArticleImage(articleData);
+
+      expect(nock.isDone()).to.be.true();
+      expect(articleImage).to.have.string('File=inline=1;width=100%;height=100%');
     });
   });
 });

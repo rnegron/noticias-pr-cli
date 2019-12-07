@@ -8,7 +8,7 @@ const siteUrl = 'https://www.noticel.com/';
 
 describe('parsing noticel articles', function() {
   context('having internet connection and articles being available', function() {
-    const html = fs.readFileSync(path.join(__dirname, 'noticel.html'), 'utf8');
+    const html = fs.readFileSync(path.join(__dirname, 'files', 'noticel.html'), 'utf8');
     beforeEach(() => {
       nock(siteUrl)
         .get('/')

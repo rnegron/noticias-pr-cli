@@ -8,7 +8,10 @@ const siteUrl = 'https://www.primerahora.com/noticias/';
 
 describe('parsing primera hora articles', function() {
   context('having internet connection and articles being available', function() {
-    const html = fs.readFileSync(path.join(__dirname, 'primerahora.html'), 'utf8');
+    const html = fs.readFileSync(
+      path.join(__dirname, 'files', 'primerahora.html'),
+      'utf8'
+    );
     beforeEach(() => {
       nock(siteUrl)
         .get('/')

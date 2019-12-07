@@ -8,7 +8,10 @@ const siteUrl = 'https://www.elnuevodia.com';
 
 describe('parsing el nuevo dia articles', function() {
   context('having internet connection and articles being available', function() {
-    const html = fs.readFileSync(path.join(__dirname, 'elnuevodia.html'), 'utf8');
+    const html = fs.readFileSync(
+      path.join(__dirname, 'files', 'elnuevodia.html'),
+      'utf8'
+    );
     beforeEach(() => {
       nock(siteUrl)
         .get('/')
