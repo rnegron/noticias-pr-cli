@@ -134,10 +134,9 @@ describe('retrieving parsed article data from an article', async function() {
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
       );
 
-      const articleImage = await cli.retrieveArticleImage(articleData);
+      await cli.retrieveArticleImage(articleData);
 
       expect(imageScope.isDone()).to.equal(true);
-      expect(articleImage).to.have.string('File=inline=1;width=100%;height=100%');
     });
   });
 });
