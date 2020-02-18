@@ -10,7 +10,6 @@ const terminalLink = require('terminal-link');
 const terminalImage = require('terminal-image');
 
 const cFonts = require('cfonts');
-const { format, parseISO } = require('date-fns');
 const logger = require('debug')('noticias-pr');
 const htmlToPlainText = require('html2plaintext');
 const Mercury = require('@postlight/mercury-parser');
@@ -18,6 +17,7 @@ const Mercury = require('@postlight/mercury-parser');
 // Custom modules
 const exit = require('./lib/exit');
 const prompts = require('./lib/prompts');
+const formatDate = require('./lib/formatDate');
 const retrieveArticlesFromNewsSite = require('./lib/noticieros');
 
 /* istanbul ignore next */
@@ -27,7 +27,7 @@ function printArticle(articleImage, article) {
     ${articleImage}
     \n
     \t\t\tTítulo: ${article.title}
-    \t\t\tPublicado: ${format(parseISO(article.date_published), 'd/M/yyyy')}
+    \t\t\tPublicado: ${formatDate(article.date_published)}
     \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
     \n\n
     ${htmlToPlainText(article.content)}
@@ -54,6 +54,7 @@ async function retrieveNewsSiteChoices() {
   return [
     { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
     { title: 'Primera Hora', value: 'www.primerahora.com' },
+    { title: 'El Vocero', value: 'www.elvocero.com' },
     { title: 'Noticel', value: 'www.noticel.com' },
     { title: 'Salir', value: 'exit' },
   ];
