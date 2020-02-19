@@ -3,7 +3,7 @@
   "version": "0.9.0",
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
-    "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel node cli.js",
+    "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel,noticieros:elvocero node cli.js",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint cli.js lib/** test/**",
     "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls"
