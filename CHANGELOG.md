@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Obtener noticas de El Vocero ()
+- Obtener noticas de El Vocero (gracias [@agmm](https://github.com/agmm))
 
 ## TODO: Escribir los changelogs entre 0.3.0 y 0.10.0
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Obtener noticias de Noticel (gracias @agmm)
+- Obtener noticias de Noticel 
 
 ### Updated
 
