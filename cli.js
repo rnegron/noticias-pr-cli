@@ -21,6 +21,11 @@ const formatDate = require('./lib/formatDate');
 const retrieveArticlesFromNewsSite = require('./lib/noticieros');
 
 /* istanbul ignore next */
+function terminalLinkFallback(text, url) {
+  return `${text} ${url}`;
+}
+
+/* istanbul ignore next */
 function printArticle(articleImage, article) {
   console.log(`
     \n
@@ -28,7 +33,9 @@ function printArticle(articleImage, article) {
     \n
     \t\t\tTítulo: ${article.title}
     \t\t\tPublicado: ${formatDate(article.date_published)}
-    \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url)}
+    \t\t\tLeer en la web:  ${terminalLink(article.domain, article.url, {
+      fallback: terminalLinkFallback,
+    })}
     \n\n
     ${htmlToPlainText(article.content)}
     \n
