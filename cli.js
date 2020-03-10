@@ -60,7 +60,14 @@ async function checkConnectionToNewsSite(chosenNewsSite) {
 async function retrieveNewsSiteChoices() {
   return [
     { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
-    { title: 'Primera Hora', value: 'www.primerahora.com' },
+    {
+      title: `\u001B[9mPrimera Hora\u001B[29m (${terminalLink(
+        'Ver discusión en Github',
+        'https://github.com/rnegron/noticias-pr-cli/issues/105'
+      )})`,
+      value: 'www.primerahora.com',
+      disabled: true,
+    },
     { title: 'El Vocero', value: 'www.elvocero.com' },
     { title: 'Noticel', value: 'www.noticel.com' },
     { title: 'Salir', value: 'exit' },
