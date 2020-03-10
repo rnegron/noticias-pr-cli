@@ -17,7 +17,7 @@ describe('retrieving news site choices', function() {
     expect(newsSiteChoices).to.be.an('array');
 
     for (const newsSiteChoice of newsSiteChoices) {
-      expect(newsSiteChoice).to.have.all.keys('title', 'value');
+      expect(newsSiteChoice).to.include.all.keys('title', 'value');
     }
   });
 });
