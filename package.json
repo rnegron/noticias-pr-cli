@@ -6,7 +6,9 @@
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel,noticieros:elvocero node cli.js",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint cli.js lib/** test/**",
-    "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls"
+    "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",
@@ -61,7 +63,8 @@
     "prompts": "^2.3.2",
     "terminal-image": "^0.2.0",
     "terminal-link": "^2.1.1",
-    "x-ray": "^2.3.4"
+    "x-ray": "^2.3.4",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -81,5 +84,6 @@
     "nyc": "^15.0.1",
     "prettier": "^1.19.1",
     "sinon": "^8.1.1"
-  }
+  },
+  "snyk": true
 }
