@@ -59,7 +59,7 @@
     "is-reachable": "^4.0.0",
     "ora": "^4.0.2",
     "prompts": "^2.3.2",
-    "terminal-image": "^0.2.0",
+    "terminal-image": "^1.2.0",
     "terminal-link": "^2.1.1",
     "x-ray": "^2.3.4"
   },
