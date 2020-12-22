@@ -1,4 +1,5 @@
 module.exports = {
+    "plugins": ["prettier"],
     "env": {
         "commonjs": true,
         "es6": true,
@@ -17,5 +18,6 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
+        "prettier/prettier": "error"
     }
 };

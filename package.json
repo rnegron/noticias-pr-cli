@@ -5,7 +5,7 @@
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel,noticieros:elvocero node cli.js",
     "test": "NODE_ENV=test nyc mocha",
-    "lint": "eslint cli.js lib/** test/**",
+    "lint": "eslint cli.js \"lib/**\" \"test/**\"",
     "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls",
     "upgrade-interactive": "npm-check --update"
   },
@@ -74,7 +74,7 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-promise": "^4.2.1",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
@@ -82,7 +82,7 @@
     "nock": "^13.0.5",
     "npm-check": "^5.9.2",
     "nyc": "^15.0.1",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "sinon": "^9.2.2"
   },
   "husky": {

@@ -7,28 +7,22 @@ const siteParser = require('../lib/noticieros/elvocero');
 
 const siteUrl = 'https://www.elvocero.com/';
 
-describe('parsing el vocero articles', function() {
-  context('having internet connection and articles being available', function() {
+describe('parsing el vocero articles', function () {
+  context('having internet connection and articles being available', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elvocero.html'),
       'utf8'
     );
     beforeEach(() => {
-      nock(siteUrl)
-        .get('/')
-        .reply(200, html);
+      nock(siteUrl).get('/').reply(200, html);
     });
 
-    it('should return the articles', async function() {
+    it('should return the articles', async function () {
       const response = await siteParser();
 
-      expect(response)
-        .to.be.an('array')
-        .and.have.lengthOf(5);
+      expect(response).to.be.an('array').and.have.lengthOf(5);
       for (const article of response) {
-        expect(article)
-          .to.be.an('object')
-          .and.to.have.all.keys('title', 'link');
+        expect(article).to.be.an('object').and.to.have.all.keys('title', 'link');
       }
       expect(response[0].title).to.be.equal(
         'Dr. Pruebito descubre químico para eliminar los bugs'

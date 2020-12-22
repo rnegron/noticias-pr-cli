@@ -32,6 +32,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
 
+## [0.11.0] - 2020-12-22
+
+### Updated
+
+- Actualizar dependencias
+
+- Correr Prettier
+
 
 ## [0.10.2] - 2020-04-10
 
@@ -39,11 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.0] - 2020-02-18
 
+### Added
+- Obtener noticas de El Vocero (gracias [@agmm](https://github.com/agmm))
 ### Updated
 
 - Actualizar dependencias
 
-- Obtener noticas de El Vocero (gracias [@agmm](https://github.com/agmm))
 
 ## TODO: Escribir los changelogs entre 0.3.0 y 0.10.0
 

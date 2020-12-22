@@ -7,24 +7,20 @@ const siteParser = require('../lib/noticieros/elnuevodia');
 
 const siteUrl = 'https://www.elnuevodia.com';
 
-describe('parsing el nuevo dia articles', function() {
-  context('having internet connection and articles being available', function() {
+describe('parsing el nuevo dia articles', function () {
+  context('having internet connection and articles being available', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elnuevodia.html'),
       'utf8'
     );
     beforeEach(() => {
-      nock(siteUrl)
-        .get('/')
-        .reply(200, html);
+      nock(siteUrl).get('/').reply(200, html);
     });
 
-    it('should return the leading article', async function() {
+    it('should return the leading article', async function () {
       const response = await siteParser();
 
-      expect(response)
-        .to.be.an('array')
-        .and.have.lengthOf(3);
+      expect(response).to.be.an('array').and.have.lengthOf(3);
 
       const leadingArticle = response[0];
       expect(leadingArticle)
@@ -41,7 +37,7 @@ describe('parsing el nuevo dia articles', function() {
       );
     });
 
-    it('should return the secondary articles', async function() {
+    it('should return the secondary articles', async function () {
       const response = await siteParser();
 
       const firstSecondaryArticle = response[1];
@@ -77,23 +73,19 @@ describe('parsing el nuevo dia articles', function() {
     });
   });
 
-  context('paywalled articles being available', function() {
+  context('paywalled articles being available', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elnuevodia-paywall.html'),
       'utf8'
     );
     beforeEach(() => {
-      nock(siteUrl)
-        .get('/')
-        .reply(200, html);
+      nock(siteUrl).get('/').reply(200, html);
     });
 
-    it('should not return articles which are behind a paywall', async function() {
+    it('should not return articles which are behind a paywall', async function () {
       const response = await siteParser();
 
-      expect(response)
-        .to.be.an('array')
-        .and.have.lengthOf(2);
+      expect(response).to.be.an('array').and.have.lengthOf(2);
     });
   });
 });

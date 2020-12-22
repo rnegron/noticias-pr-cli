@@ -11,8 +11,8 @@ const Mercury = require('@postlight/mercury-parser');
 // Module to test
 const cli = require('../cli');
 
-describe('retrieving news site choices', function() {
-  it('should return an array of objects with particular keys', async function() {
+describe('retrieving news site choices', function () {
+  it('should return an array of objects with particular keys', async function () {
     const newsSiteChoices = await cli.retrieveNewsSiteChoices();
     expect(newsSiteChoices).to.be.an('array');
 
@@ -22,16 +22,16 @@ describe('retrieving news site choices', function() {
   });
 });
 
-describe('retrieving articles from a news site', function() {
-  before(function() {
+describe('retrieving articles from a news site', function () {
+  before(function () {
     nock.disableNetConnect();
   });
 
-  after(function() {
+  after(function () {
     nock.enableNetConnect();
   });
 
-  context('chose el nuevo dia', function() {
+  context('chose el nuevo dia', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elnuevodia.html'),
       'utf8'
@@ -39,22 +39,17 @@ describe('retrieving articles from a news site', function() {
     const siteUrl = 'https://www.elnuevodia.com/';
     const site = 'www.elnuevodia.com';
 
-    beforeEach(function() {
-      nock(siteUrl)
-        .persist()
-        .get('/')
-        .reply(200, html);
+    beforeEach(function () {
+      nock(siteUrl).persist().get('/').reply(200, html);
     });
 
-    afterEach(function() {
+    afterEach(function () {
       nock.cleanAll();
     });
 
-    it('should return three articles with respective URLs', async function() {
+    it('should return three articles with respective URLs', async function () {
       const articlesAvailable = await cli.retrieveArticlesAvailable(site);
-      expect(articlesAvailable)
-        .to.be.an('array')
-        .and.to.have.lengthOf(4);
+      expect(articlesAvailable).to.be.an('array').and.to.have.lengthOf(4);
 
       expect(articlesAvailable[0]).to.have.all.keys('title', 'value');
 
@@ -65,17 +60,17 @@ describe('retrieving articles from a news site', function() {
   });
 });
 
-describe('retrieving parsed article data from an article', async function() {
-  before(function() {
+describe('retrieving parsed article data from an article', async function () {
+  before(function () {
     nock.disableNetConnect();
   });
 
-  after(function() {
+  after(function () {
     nock.enableNetConnect();
   });
 
-  context('having already chosen an article from el nuevo dia', function() {
-    before(function() {
+  context('having already chosen an article from el nuevo dia', function () {
+    before(function () {
       sinon.stub(Mercury, 'parse').callsFake(() => {
         return {
           title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
@@ -96,11 +91,11 @@ describe('retrieving parsed article data from an article', async function() {
       });
     });
 
-    afterEach(function() {
+    afterEach(function () {
       nock.cleanAll();
     });
 
-    it('should return an object representing the parsed article', async function() {
+    it('should return an object representing the parsed article', async function () {
       const articleData = await cli.retrieveArticleData(
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
       );
@@ -125,7 +120,7 @@ describe('retrieving parsed article data from an article', async function() {
         );
     });
 
-    it('should obtain the article lead image', async function() {
+    it('should obtain the article lead image', async function () {
       const imageScope = nock('https://noticias.pr/primera')
         .get('/flag.png')
         .replyWithFile(200, path.join(__dirname, 'files', 'flag.png'));
