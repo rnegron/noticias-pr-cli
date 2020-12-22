@@ -1,6 +1,6 @@
 {
   "name": "noticias-pr",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Lee las noticias locales desde tu terminal",
   "scripts": {
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel,noticieros:elvocero node cli.js",
