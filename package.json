@@ -7,7 +7,10 @@
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint cli.js \"lib/**\" \"test/**\"",
     "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls",
-    "upgrade-interactive": "npm-check --update"
+    "upgrade-interactive": "npm-check --update",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "main": "cli.js",
   "repository": "rnegron/noticias-pr-cli",
@@ -53,42 +56,38 @@
   "dependencies": {
     "@postlight/mercury-parser": "^2.2.0",
     "ansi-escapes": "^4.3.1",
-    "cfonts": "^2.8.1",
-    "date-fns": "^2.12.0",
+    "cfonts": "^2.9.1",
+    "date-fns": "^2.17.0",
     "got": "^11.8.1",
     "html2plaintext": "^2.1.2",
     "is-reachable": "^5.0.0",
-    "ora": "^5.1.0",
+    "ora": "^5.3.0",
     "prompts": "^2.3.2",
     "terminal-image": "^1.2.1",
     "terminal-link": "^2.1.1",
     "x-ray": "^2.3.4"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.3.0",
     "coveralls": "^3.0.11",
     "debug": "^4.1.1",
-    "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "husky": "^4.3.6",
-    "lint-staged": "^10.5.3",
-    "mocha": "^8.2.1",
-    "nock": "^13.0.5",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "husky": "^5.0.9",
+    "lint-staged": "^10.5.4",
+    "mocha": "^8.3.0",
+    "nock": "^13.0.7",
     "npm-check": "^5.9.2",
     "nyc": "^15.0.1",
+    "pinst": "^2.1.4",
     "prettier": "2.2.1",
-    "sinon": "^9.2.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "sinon": "^9.2.4"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
