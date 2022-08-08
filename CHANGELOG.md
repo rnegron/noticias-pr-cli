@@ -31,14 +31,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
+## [0.12.0] - 2022-08-08
+
+### Updated
+- Actualizar dependencias
+
+- `noticias-pr` ahora utiliza [ES Modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules)
 
 ## [0.11.0] - 2020-12-22
+
+### Added
+- Utilizar Github Actions
 
 ### Updated
 
 - Actualizar dependencias
 
 - Correr Prettier
+
+### Removed
+
+- Remover TravisCI
 
 
 ## [0.10.2] - 2020-04-10

@@ -1,11 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const expect = require('chai').expect;
-const nock = require('nock');
+import fs from 'fs';
+import path from 'path';
+import { expect } from 'chai';
+import nock from 'nock';
+import { URL } from 'url';
 
-const siteParser = require('../lib/noticieros/elnuevodia');
+import siteParser from '../lib/noticieros/elnuevodia.js';
 
 const siteUrl = 'https://www.elnuevodia.com';
+const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('parsing el nuevo dia articles', function () {
   context('having internet connection and articles being available', function () {

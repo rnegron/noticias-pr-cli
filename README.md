@@ -31,13 +31,19 @@ Esta aplicación fue creada con la intención de practicar NodeJS y para aprende
 
 ## Instalación
 
-Asegurate tener [NodeJS](https://nodejs.org/en/) versión 10 en adelante.
+Asegurate tener [NodeJS](https://nodejs.org/en/) versión `14.16` en adelante.
 
 ```bash
 $ npm install -g noticias-pr
 ```
 
 Con la opción `-g`, **npm** instalará `noticias-pr` globalmente, y el comando "`noticas-pr`" estará siempre accesible.
+
+Alternativamente, puedes utilizar `npx` (ver: [npx vs npm exec](https://docs.npmjs.com/cli/v8/commands/npx#npx-vs-npm-exec))
+
+```bash
+$ npx noticias-pr
+```
 
 ## Uso
 
@@ -57,8 +63,8 @@ Luego, seguir las instrucciones desplegadas en el terminal.
 
 En orden de añadición:
 
-1. El Nuevo Día: https://www.elnuevodia.com
-2. Primera Hora: https://www.primerahora.com
+1. ~~El Nuevo Día: https://www.elnuevodia.com~~
+2. ~~Primera Hora: https://www.primerahora.com~~
 3. Noticel: https://www.noticel.com
 4. El Vocero: https://www.elvocero.com
 

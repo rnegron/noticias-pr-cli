@@ -1,11 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const expect = require('chai').expect;
-const nock = require('nock');
+import fs from 'fs';
+import path from 'path';
+import { expect } from 'chai';
+import nock from 'nock';
+import { URL } from 'url';
 
-const siteParser = require('../lib/noticieros/primerahora');
+import siteParser from '../lib/noticieros/primerahora.js';
 
 const siteUrl = 'https://www.primerahora.com/noticias/';
+
+const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('parsing primera hora articles', function () {
   context('having internet connection and articles being available', function () {

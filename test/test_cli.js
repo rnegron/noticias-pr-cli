@@ -1,15 +1,16 @@
-'use strict';
+import fs from 'fs';
+import path from 'path';
+import { URL } from 'url';
 
-const fs = require('fs');
-const path = require('path');
-
-const nock = require('nock');
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const Mercury = require('@postlight/mercury-parser');
+import nock from 'nock';
+import { expect } from 'chai';
+import sinon from 'sinon';
+import Mercury from '@postlight/mercury-parser';
 
 // Module to test
-const cli = require('../cli');
+import cli from '../cli.js';
+
+const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('retrieving news site choices', function () {
   it('should return an array of objects with particular keys', async function () {

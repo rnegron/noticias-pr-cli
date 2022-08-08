@@ -1,24 +1,25 @@
 #!/usr/bin/env node
-'use strict';
 
 // The sindresorhus block
-const got = require('got');
-const ora = require('ora');
-const isReachable = require('is-reachable');
-const ansiEscapes = require('ansi-escapes');
-const terminalLink = require('terminal-link');
-const terminalImage = require('terminal-image');
+import got from 'got';
+import ora from 'ora';
+import isReachable from 'is-reachable';
+import ansiEscapes from 'ansi-escapes';
+import terminalLink from 'terminal-link';
+import terminalImage from 'terminal-image';
 
-const cFonts = require('cfonts');
-const logger = require('debug')('noticias-pr');
-const htmlToPlainText = require('html2plaintext');
-const Mercury = require('@postlight/mercury-parser');
+import cFonts from 'cfonts';
+import debug from 'debug';
+import htmlToPlainText from 'html2plaintext';
+import Mercury from '@postlight/mercury-parser';
 
 // Custom modules
-const exit = require('./lib/exit');
-const prompts = require('./lib/prompts');
-const formatDate = require('./lib/formatDate');
-const retrieveArticlesFromNewsSite = require('./lib/noticieros');
+import exit from './lib/exit.js';
+import prompts from './lib/prompts.js';
+import formatDate from './lib/formatDate.js';
+import retrieveArticlesFromNewsSite from './lib/noticieros/index.js';
+
+const logger = debug('noticias-pr');
 
 /* istanbul ignore next */
 function terminalLinkFallback(text, url) {
@@ -57,7 +58,7 @@ async function checkConnectionToNewsSite(chosenNewsSite) {
   }
 }
 
-async function retrieveNewsSiteChoices() {
+export async function retrieveNewsSiteChoices() {
   return [
     { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
     {
@@ -86,7 +87,7 @@ async function promptForNewsSite(newsSiteChoices) {
   return newsSiteChoice.value;
 }
 
-async function retrieveArticlesAvailable(chosenNewsSite) {
+export async function retrieveArticlesAvailable(chosenNewsSite) {
   // return candidate articles given a news site
   const articleChoices = [];
 
@@ -141,7 +142,7 @@ async function promptForArticle(articleChoices) {
   }
 }
 
-async function retrieveArticleData(article) {
+export async function retrieveArticleData(article) {
   const prepareArticleSpinner = ora('Cargando artículo...');
 
   // Get article data from Mercury
@@ -159,7 +160,7 @@ async function retrieveArticleData(article) {
   }
 }
 
-async function retrieveArticleImage(article) {
+export async function retrieveArticleImage(article) {
   // Verifies that the article parsed via Mercury has a lead image, and tries to fetch it
   const imageLoadingSpinner = ora('Descargando y preparando imágen...');
   try {
@@ -285,10 +286,18 @@ if (process.env.NODE_ENV !== 'test') {
   entrypoint();
 }
 
-// Export retrieval functions for testing purposes
-module.exports = {
+export default {
+  terminalLinkFallback,
+  printArticle,
+  checkConnectionToNewsSite,
   retrieveNewsSiteChoices,
+  promptForNewsSite,
   retrieveArticlesAvailable,
+  promptForArticle,
   retrieveArticleData,
   retrieveArticleImage,
+  promptAfterArticle,
+  performChosenAction,
+  cliInitialMenu,
+  entrypoint,
 };

@@ -1,11 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const expect = require('chai').expect;
-const nock = require('nock');
+import fs from 'fs';
+import path from 'path';
+import { expect } from 'chai';
+import nock from 'nock';
+import { URL } from 'url';
 
-const siteParser = require('../lib/noticieros/elvocero');
+import siteParser from '../lib/noticieros/elvocero.js';
 
 const siteUrl = 'https://www.elvocero.com/';
+
+const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('parsing el vocero articles', function () {
   context('having internet connection and articles being available', function () {
