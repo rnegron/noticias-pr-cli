@@ -4,13 +4,11 @@
 <br>
 <p align="center">
 
-[![Build Status](https://travis-ci.org/rnegron/noticias-pr-cli.svg?branch=master)](https://travis-ci.org/rnegron/noticias-pr-cli)
-[![Coverage Status](https://coveralls.io/repos/github/rnegron/noticias-pr-cli/badge.svg?branch=master)](https://coveralls.io/github/rnegron/noticias-pr-cli?branch=master)
+![CI workflow](https://github.com/rnegron/noticias-pr-cli/actions/workflows/ci.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d8700b46efaa7e08a8f1/maintainability)](https://codeclimate.com/github/rnegron/noticias-pr-cli/maintainability)
 [![npm](https://img.shields.io/npm/v/noticias-pr.svg)](https://www.npmjs.com/package/noticias-pr)
 ![npm downloads](https://img.shields.io/npm/dt/noticias-pr)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
-[![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=rnegron/noticias-pr-cli)](https://dependabot.com)
 
 </p>
 
