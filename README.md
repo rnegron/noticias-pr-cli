@@ -29,7 +29,7 @@ Esta aplicación fue creada con la intención de practicar NodeJS y para aprende
 
 ## Instalación
 
-Asegurate tener [NodeJS](https://nodejs.org/en/) versión `14.16` en adelante.
+Asegurate tener [NodeJS](https://nodejs.org/es/) versión `16` en adelante.
 
 ```bash
 $ npm install -g noticias-pr

@@ -7,7 +7,7 @@
     "cli": "DEBUG=noticias-pr,noticieros:endi,noticieros:primerahora,noticieros:noticel,noticieros:elvocero node cli.js",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint cli.js \"lib/**\" \"test/**\"",
-    "coverage": "eslint . && nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=lcov",
     "upgrade-interactive": "npm-check --update",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "bin": "cli.js",
   "engines": {
-    "node": ">=14.16"
+    "node": ">=16"
   },
   "files": [
     "lib",
@@ -70,7 +70,6 @@
   },
   "devDependencies": {
     "chai": "^4.3.6",
-    "coveralls": "^3.1.1",
     "debug": "^4.3.4",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
