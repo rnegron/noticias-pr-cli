@@ -1,6 +1,6 @@
 {
   "name": "noticias-pr",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Lee las noticias locales desde tu terminal",
   "type": "module",
   "scripts": {
