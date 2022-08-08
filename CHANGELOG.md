@@ -31,8 +31,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
+## [0.13.0] - 2022-08-08
+### Breaking
+
+- Requiere `Node >= 16`
+
 ## [0.12.0] - 2022-08-08
 
+### Breaking
+
+- Requiere `Node >= 14`
 ### Updated
 - Actualizar dependencias
 
@@ -53,11 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remover TravisCI
 
-
-## [0.10.2] - 2020-04-10
-
-###
-
 ## [0.10.0] - 2020-02-18
 
 ### Added
@@ -65,9 +68,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Actualizar dependencias
-
-
-## TODO: Escribir los changelogs entre 0.3.0 y 0.10.0
 
 ## [0.3.0] - 2019-06-29
 

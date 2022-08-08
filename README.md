@@ -5,6 +5,7 @@
 <p align="center">
 
 ![CI workflow](https://github.com/rnegron/noticias-pr-cli/actions/workflows/ci.yml/badge.svg)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d8700b46efaa7e08a8f1/test_coverage)](https://codeclimate.com/github/rnegron/noticias-pr-cli/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d8700b46efaa7e08a8f1/maintainability)](https://codeclimate.com/github/rnegron/noticias-pr-cli/maintainability)
 [![npm](https://img.shields.io/npm/v/noticias-pr.svg)](https://www.npmjs.com/package/noticias-pr)
 ![npm downloads](https://img.shields.io/npm/dt/noticias-pr)
