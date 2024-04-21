@@ -31,16 +31,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
+## [0.14.1] - 2024-04-21
 
-## [0.14.0] - 2024-04-20
+### Updated
+
+- Dehabilitar El Nuevo Día
+
+## [0.14.0] - 2024-04-21
+
 ### Breaking
 
 - Requiere `Node >= 18`
 
 ## Updated
+
 - Actualizar dependencias
 
 ## [0.13.0] - 2022-08-08
+
 ### Breaking
 
 - Requiere `Node >= 16`
@@ -52,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Requiere `Node >= 14`
 
 ### Updated
+
 - Actualizar dependencias
 
 - `noticias-pr` ahora utiliza [ES Modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules)
@@ -59,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.11.0] - 2020-12-22
 
 ### Added
+
 - Utilizar Github Actions
 
 ### Updated
@@ -74,7 +84,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.10.0] - 2020-02-18
 
 ### Added
+
 - Obtener noticas de El Vocero (gracias [@agmm](https://github.com/agmm))
+
 ### Updated
 
 - Actualizar dependencias

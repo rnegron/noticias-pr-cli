@@ -57,7 +57,6 @@ Luego, seguir las instrucciones desplegadas en el terminal.
     Para navegar: Utilizar las flechas del teclado.
     Para aceptar: Utilizar la tecla de "enter" o "return".
 
-
 ### Noticieros Disponibles
 
 En orden de añadición:

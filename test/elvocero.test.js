@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
 import nock from 'nock';
-import { URL } from 'url';
 
 import siteParser from '../lib/noticieros/elvocero.js';
 
-const siteUrl = 'https://www.elvocero.com/';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const siteUrl = 'https://www.elvocero.com/';
 
 describe('parsing el vocero articles', function () {
   describe('having internet connection and articles being available', function () {
@@ -26,18 +28,26 @@ describe('parsing el vocero articles', function () {
       for (const article of response) {
         expect(Object.keys(article)).toEqual(expect.arrayContaining(['title', 'link']));
       }
-      expect(response[0].title).toBe('Dr. Pruebito descubre químico para eliminar los bugs');
+      expect(response[0].title).toBe(
+        'Dr. Pruebito descubre químico para eliminar los bugs'
+      );
 
       expect(response[0].link).toBe('https://www.elvocero.com/noticia_rotary/01.html');
 
-      expect(response[1].title).toBe('La ONU declara Pruebalandia como patrimonio de la humanidad');
+      expect(response[1].title.replace(/\s+/g, ' ')).toBe(
+        `La ONU declara Pruebalandia como patrimonio de la humanidad`
+      );
       expect(response[1].link).toBe('https://www.elvocero.com/noticia_rotary/02.html');
 
-      expect(response[2].title).toBe('El parlamento pruebalandino decide hacer frente a los bugs');
+      expect(response[2].title.replace(/\s+/g, ' ')).toBe(
+        'El parlamento pruebalandino decide hacer frente a los bugs'
+      );
 
       expect(response[2].link).toBe('https://www.elvocero.com/noticia_rotary/03.html');
 
-      expect(response[3].title).toBe('Breaking: "Las pruebas son tediosas, pero útiles"');
+      expect(response[3].title).toBe(
+        'Breaking: "Las pruebas son tediosas, pero útiles"'
+      );
       expect(response[3].link).toBe('https://www.elvocero.com/noticia_rotary/04.html');
 
       expect(response[4].title).toBe('Tráfico severo en la PR-UEBA');

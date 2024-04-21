@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { URL } from 'url';
+import { fileURLToPath } from 'url';
 
 import { jest } from '@jest/globals';
 import nock from 'nock';
@@ -9,7 +9,8 @@ import Parser from '@postlight/parser';
 // Module to test
 import cli from '../cli.js';
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('retrieving news site choices', function () {
   it('should return an array of objects with particular keys', async function () {

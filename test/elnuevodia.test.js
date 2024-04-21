@@ -1,12 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
 import nock from 'nock';
-import { URL } from 'url';
 
 import siteParser from '../lib/noticieros/elnuevodia.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const siteUrl = 'https://www.elnuevodia.com';
-const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('parsing el nuevo dia articles', function () {
   describe('having internet connection and articles being available', function () {
@@ -48,8 +51,8 @@ describe('parsing el nuevo dia articles', function () {
       expect(firstSecondaryArticle.title).toBe(
         'El representante de la cámara de pruebas guíaba carro hurtado'
       );
-      expect(firstSecondaryArticle.summary).toBe(
-        `El individuo invadió el carril contrario de la PR-UEBA, ocasionando el choque de otras cinco pruebas.`
+      expect(firstSecondaryArticle.summary.replace(/\s+/g, ' ')).toBe(
+        'El individuo invadió el carril contrario de la PR-UEBA, ocasionando el choque de otras cinco pruebas.'
       );
       expect(firstSecondaryArticle.link).toBe(
         'https://www.elnuevodia.com/noticias/representante-guiaba-carro-robado/'

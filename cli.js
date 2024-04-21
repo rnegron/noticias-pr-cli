@@ -60,7 +60,14 @@ async function checkConnectionToNewsSite(chosenNewsSite) {
 
 export async function retrieveNewsSiteChoices() {
   return [
-    { title: 'El Nuevo Día', value: 'www.elnuevodia.com' },
+    {
+      title: `\u001B[9mEl Nuevo Día\u001B[29m (${terminalLink(
+        'Ver discusión en Github',
+        'https://github.com/rnegron/noticias-pr-cli/issues/361'
+      )})`,
+      value: 'www.elnuevodia.com',
+      disabled: true,
+    },
     {
       title: `\u001B[9mPrimera Hora\u001B[29m (${terminalLink(
         'Ver discusión en Github',

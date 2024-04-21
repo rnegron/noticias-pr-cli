@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
 import nock from 'nock';
-import { URL } from 'url';
 
 import siteParser from '../lib/noticieros/noticel.js';
 
-const siteUrl = 'https://www.noticel.com/';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const siteUrl = 'https://www.noticel.com/';
 
 describe('parsing noticel articles', function () {
   describe('having internet connection and articles being available', function () {
@@ -23,13 +25,23 @@ describe('parsing noticel articles', function () {
         expect(Object.keys(article)).toEqual(expect.arrayContaining(['title', 'link']));
       }
 
-      expect(response[0].title).toBe('Breaking: "Hacer pruebas en código dismunye los bugs"');
-      expect(response[0].link).toBe('https://www.noticel.com/pruebas-codigo-menos-bugs/');
+      expect(response[0].title).toBe(
+        'Breaking: "Hacer pruebas en código dismunye los bugs"'
+      );
+      expect(response[0].link).toBe(
+        'https://www.noticel.com/pruebas-codigo-menos-bugs/'
+      );
 
-      expect(response[1].title).toBe('El representante de la cámara de pruebas guíaba carro hurtado');
-      expect(response[1].link).toBe('https://www.noticel.com/representante-guiaba-carro-robado/');
+      expect(response[1].title).toBe(
+        'El representante de la cámara de pruebas guíaba carro hurtado'
+      );
+      expect(response[1].link).toBe(
+        'https://www.noticel.com/representante-guiaba-carro-robado/'
+      );
 
-      expect(response[2].title).toBe('Mejoran las pruebas en la capital de Pruebalandia');
+      expect(response[2].title).toBe(
+        'Mejoran las pruebas en la capital de Pruebalandia'
+      );
       expect(response[2].link).toBe('https://www.noticel.com/pruebalandia-mejora/');
     });
   });
