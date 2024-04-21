@@ -11,7 +11,7 @@ import terminalImage from 'terminal-image';
 import cFonts from 'cfonts';
 import debug from 'debug';
 import htmlToPlainText from 'html2plaintext';
-import Mercury from '@postlight/mercury-parser';
+import Parser from '@postlight/parser';
 
 // Custom modules
 import exit from './lib/exit.js';
@@ -148,7 +148,7 @@ export async function retrieveArticleData(article) {
   // Get article data from Mercury
   try {
     prepareArticleSpinner.start();
-    const articleData = await Mercury.parse(article);
+    const articleData = await Parser.parse(article);
     logger('Article Data: %O', articleData);
 
     prepareArticleSpinner.succeed();

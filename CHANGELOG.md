@@ -31,6 +31,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [ ] Contribuir algunos [custom parsers](https://github.com/postlight/mercury-parser/tree/master/src/extractors/custom#custom-parsers)?
 
+
+## [0.14.0] - 2024-04-20
+### Breaking
+
+- Requiere `Node >= 18`
+
+## Updated
+- Actualizar dependencias
+
 ## [0.13.0] - 2022-08-08
 ### Breaking
 
@@ -41,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Breaking
 
 - Requiere `Node >= 14`
+
 ### Updated
 - Actualizar dependencias
 

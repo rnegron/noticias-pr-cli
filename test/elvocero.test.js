@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { expect } from 'chai';
 import nock from 'nock';
 import { URL } from 'url';
 
@@ -11,7 +10,7 @@ const siteUrl = 'https://www.elvocero.com/';
 const __dirname = new URL('.', import.meta.url).pathname;
 
 describe('parsing el vocero articles', function () {
-  context('having internet connection and articles being available', function () {
+  describe('having internet connection and articles being available', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elvocero.html'),
       'utf8'

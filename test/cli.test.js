@@ -3,9 +3,7 @@ import path from 'path';
 import { URL } from 'url';
 
 import nock from 'nock';
-import { expect } from 'chai';
-import sinon from 'sinon';
-import Mercury from '@postlight/mercury-parser';
+import Parser from '@postlight/parser';
 
 // Module to test
 import cli from '../cli.js';
@@ -15,7 +13,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 describe('retrieving news site choices', function () {
   it('should return an array of objects with particular keys', async function () {
     const newsSiteChoices = await cli.retrieveNewsSiteChoices();
-    expect(newsSiteChoices).to.be.an('array');
+    expect(typeof newsSiteChoices).toBe('array');
 
     for (const newsSiteChoice of newsSiteChoices) {
       expect(newsSiteChoice).to.include.all.keys('title', 'value');
@@ -24,15 +22,15 @@ describe('retrieving news site choices', function () {
 });
 
 describe('retrieving articles from a news site', function () {
-  before(function () {
+  beforeEach(function () {
     nock.disableNetConnect();
   });
 
-  after(function () {
+  afterEach(function () {
     nock.enableNetConnect();
   });
 
-  context('chose el nuevo dia', function () {
+  test('chose el nuevo dia', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elnuevodia.html'),
       'utf8'
@@ -70,9 +68,9 @@ describe('retrieving parsed article data from an article', async function () {
     nock.enableNetConnect();
   });
 
-  context('having already chosen an article from el nuevo dia', function () {
+  test('having already chosen an article from el nuevo dia', function () {
     before(function () {
-      sinon.stub(Mercury, 'parse').callsFake(() => {
+      jest.spyOn(Parser, 'parse').mockImplementation(() => {
         return {
           title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
           author: null,
