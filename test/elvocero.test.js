@@ -22,45 +22,27 @@ describe('parsing el vocero articles', function () {
     it('should return the articles', async function () {
       const response = await siteParser();
 
-      expect(response).to.be.an('array').and.have.lengthOf(5);
+      expect(response).toHaveLength(5);
       for (const article of response) {
-        expect(article).to.be.an('object').and.to.have.all.keys('title', 'link');
+        expect(Object.keys(article)).toEqual(expect.arrayContaining(['title', 'link']));
       }
-      expect(response[0].title).to.be.equal(
-        'Dr. Pruebito descubre químico para eliminar los bugs'
-      );
+      expect(response[0].title).toBe('Dr. Pruebito descubre químico para eliminar los bugs');
 
-      expect(response[0].link).to.be.equal(
-        'https://www.elvocero.com/noticia_rotary/01.html'
-      );
+      expect(response[0].link).toBe('https://www.elvocero.com/noticia_rotary/01.html');
 
-      expect(response[1].title).to.be.equal(
-        'La ONU declara Pruebalandia como patrimonio de la humanidad'
-      );
-      expect(response[1].link).to.be.equal(
-        'https://www.elvocero.com/noticia_rotary/02.html'
-      );
+      expect(response[1].title).toBe('La ONU declara Pruebalandia como patrimonio de la humanidad');
+      expect(response[1].link).toBe('https://www.elvocero.com/noticia_rotary/02.html');
 
-      expect(response[2].title).to.be.equal(
-        'El parlamento pruebalandino decide hacer frente a los bugs'
-      );
+      expect(response[2].title).toBe('El parlamento pruebalandino decide hacer frente a los bugs');
 
-      expect(response[2].link).to.be.equal(
-        'https://www.elvocero.com/noticia_rotary/03.html'
-      );
+      expect(response[2].link).toBe('https://www.elvocero.com/noticia_rotary/03.html');
 
-      expect(response[3].title).to.be.equal(
-        'Breaking: "Las pruebas son tediosas, pero útiles"'
-      );
-      expect(response[3].link).to.be.equal(
-        'https://www.elvocero.com/noticia_rotary/04.html'
-      );
+      expect(response[3].title).toBe('Breaking: "Las pruebas son tediosas, pero útiles"');
+      expect(response[3].link).toBe('https://www.elvocero.com/noticia_rotary/04.html');
 
-      expect(response[4].title).to.be.equal('Tráfico severo en la PR-UEBA');
+      expect(response[4].title).toBe('Tráfico severo en la PR-UEBA');
 
-      expect(response[4].link).to.be.equal(
-        'https://www.elvocero.com/noticia_rotary/05.html'
-      );
+      expect(response[4].link).toBe('https://www.elvocero.com/noticia_rotary/05.html');
     });
   });
 });

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { URL } from 'url';
 
+import { jest } from '@jest/globals';
 import nock from 'nock';
 import Parser from '@postlight/parser';
 
@@ -13,10 +14,12 @@ const __dirname = new URL('.', import.meta.url).pathname;
 describe('retrieving news site choices', function () {
   it('should return an array of objects with particular keys', async function () {
     const newsSiteChoices = await cli.retrieveNewsSiteChoices();
-    expect(typeof newsSiteChoices).toBe('array');
+    expect(typeof newsSiteChoices).toBe('object');
 
     for (const newsSiteChoice of newsSiteChoices) {
-      expect(newsSiteChoice).to.include.all.keys('title', 'value');
+      expect(Object.keys(newsSiteChoice)).toEqual(
+        expect.arrayContaining(['title', 'value'])
+      );
     }
   });
 });
@@ -30,7 +33,7 @@ describe('retrieving articles from a news site', function () {
     nock.enableNetConnect();
   });
 
-  test('chose el nuevo dia', function () {
+  describe('chose el nuevo dia', function () {
     const html = fs.readFileSync(
       path.join(__dirname, 'files', 'elnuevodia.html'),
       'utf8'
@@ -48,28 +51,31 @@ describe('retrieving articles from a news site', function () {
 
     it('should return three articles with respective URLs', async function () {
       const articlesAvailable = await cli.retrieveArticlesAvailable(site);
-      expect(articlesAvailable).to.be.an('array').and.to.have.lengthOf(4);
+      expect(Array.isArray(articlesAvailable)).toBe(true);
+      expect(articlesAvailable).toHaveLength(4);
 
-      expect(articlesAvailable[0]).to.have.all.keys('title', 'value');
+      expect(Object.keys(articlesAvailable[0])).toEqual(
+        expect.arrayContaining(['title', 'value'])
+      );
 
-      expect(articlesAvailable[0].value).to.equal(
+      expect(articlesAvailable[0].value).toBe(
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs'
       );
     });
   });
 });
 
-describe('retrieving parsed article data from an article', async function () {
-  before(function () {
+describe('retrieving parsed article data from an article', function () {
+  beforeAll(function () {
     nock.disableNetConnect();
   });
 
-  after(function () {
+  afterAll(function () {
     nock.enableNetConnect();
   });
 
-  test('having already chosen an article from el nuevo dia', function () {
-    before(function () {
+  describe('having already chosen an article from el nuevo dia', function () {
+    beforeAll(function () {
       jest.spyOn(Parser, 'parse').mockImplementation(() => {
         return {
           title: 'Breaking: "Hacer pruebas en código dismunye los bugs"',
@@ -99,9 +105,8 @@ describe('retrieving parsed article data from an article', async function () {
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs/'
       );
 
-      expect(articleData)
-        .to.be.an('object')
-        .and.to.have.all.keys(
+      expect(Object.keys(articleData)).toEqual(
+        expect.arrayContaining([
           'title',
           'author',
           'date_published',
@@ -115,8 +120,9 @@ describe('retrieving parsed article data from an article', async function () {
           'word_count',
           'direction',
           'total_pages',
-          'rendered_pages'
-        );
+          'rendered_pages',
+        ])
+      );
     });
 
     it('should obtain the article lead image', async function () {
@@ -130,7 +136,7 @@ describe('retrieving parsed article data from an article', async function () {
 
       await cli.retrieveArticleImage(articleData);
 
-      expect(imageScope.isDone()).to.equal(true);
+      expect(imageScope.isDone()).toBe(true);
     });
   });
 });

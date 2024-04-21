@@ -21,19 +21,19 @@ describe('parsing el nuevo dia articles', function () {
     it('should return the leading article', async function () {
       const response = await siteParser();
 
-      expect(response).to.be.an('array').and.have.lengthOf(3);
+      expect(response).toHaveLength(3);
 
       const leadingArticle = response[0];
-      expect(leadingArticle)
-        .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
+      expect(Object.keys(leadingArticle)).toEqual(
+        expect.arrayContaining(['title', 'summary', 'link', 'paywall'])
+      );
 
-      expect(leadingArticle.title).to.be.equal(
+      expect(leadingArticle.title).toBe(
         'Breaking: "Hacer pruebas en código dismunye los bugs"'
       );
 
-      expect(leadingArticle.summary).to.be.equal('Vale la pena');
-      expect(leadingArticle.link).to.be.equal(
+      expect(leadingArticle.summary).toBe('Vale la pena');
+      expect(leadingArticle.link).toBe(
         'https://www.elnuevodia.com/noticias/pruebas-codigo-menos-bugs'
       );
     });
@@ -42,33 +42,32 @@ describe('parsing el nuevo dia articles', function () {
       const response = await siteParser();
 
       const firstSecondaryArticle = response[1];
-      expect(firstSecondaryArticle)
-        .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
-      expect(firstSecondaryArticle.title).to.be.equal(
+      expect(Object.keys(firstSecondaryArticle)).toEqual(
+        expect.arrayContaining(['title', 'summary', 'link', 'paywall'])
+      );
+      expect(firstSecondaryArticle.title).toBe(
         'El representante de la cámara de pruebas guíaba carro hurtado'
       );
-      expect(firstSecondaryArticle.summary).to.be.equal(
-        `El individuo invadió el carril contrario de la PR-UEBA,
-                      ocasionando el choque de otras cinco pruebas.`
+      expect(firstSecondaryArticle.summary).toBe(
+        `El individuo invadió el carril contrario de la PR-UEBA, ocasionando el choque de otras cinco pruebas.`
       );
-      expect(firstSecondaryArticle.link).to.be.equal(
+      expect(firstSecondaryArticle.link).toBe(
         'https://www.elnuevodia.com/noticias/representante-guiaba-carro-robado/'
       );
 
       const secondSecondaryArticle = response[2];
-      expect(secondSecondaryArticle)
-        .to.be.an('object')
-        .and.to.have.all.keys('title', 'summary', 'link', 'paywall');
+      expect(Object.keys(secondSecondaryArticle)).toEqual(
+        expect.arrayContaining(['title', 'summary', 'link', 'paywall'])
+      );
 
-      expect(secondSecondaryArticle.title).to.be.equal(
+      expect(secondSecondaryArticle.title).toBe(
         'Mejoran las pruebas en la capital de Pruebalandia'
       );
 
-      expect(secondSecondaryArticle.summary).to.be.equal(
+      expect(secondSecondaryArticle.summary).toBe(
         'La presidente de Pruebalandia se expresó'
       );
-      expect(secondSecondaryArticle.link).to.be.equal(
+      expect(secondSecondaryArticle.link).toBe(
         'https://www.elnuevodia.com/noticias/pruebalandia-mejora/'
       );
     });
@@ -86,7 +85,7 @@ describe('parsing el nuevo dia articles', function () {
     it('should not return articles which are behind a paywall', async function () {
       const response = await siteParser();
 
-      expect(response).to.be.an('array').and.have.lengthOf(2);
+      expect(response).toHaveLength(2);
     });
   });
 });

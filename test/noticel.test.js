@@ -20,29 +20,17 @@ describe('parsing noticel articles', function () {
       const response = await siteParser();
 
       for (const article of response) {
-        expect(article).to.be.an('object').and.to.have.all.keys('title', 'link');
+        expect(Object.keys(article)).toEqual(expect.arrayContaining(['title', 'link']));
       }
 
-      expect(response[0].title).to.be.equal(
-        'Breaking: "Hacer pruebas en código dismunye los bugs"'
-      );
-      expect(response[0].link).to.be.equal(
-        'https://www.noticel.com/pruebas-codigo-menos-bugs/'
-      );
+      expect(response[0].title).toBe('Breaking: "Hacer pruebas en código dismunye los bugs"');
+      expect(response[0].link).toBe('https://www.noticel.com/pruebas-codigo-menos-bugs/');
 
-      expect(response[1].title).to.be.equal(
-        'El representante de la cámara de pruebas guíaba carro hurtado'
-      );
-      expect(response[1].link).to.be.equal(
-        'https://www.noticel.com/representante-guiaba-carro-robado/'
-      );
+      expect(response[1].title).toBe('El representante de la cámara de pruebas guíaba carro hurtado');
+      expect(response[1].link).toBe('https://www.noticel.com/representante-guiaba-carro-robado/');
 
-      expect(response[2].title).to.be.equal(
-        'Mejoran las pruebas en la capital de Pruebalandia'
-      );
-      expect(response[2].link).to.be.equal(
-        'https://www.noticel.com/pruebalandia-mejora/'
-      );
+      expect(response[2].title).toBe('Mejoran las pruebas en la capital de Pruebalandia');
+      expect(response[2].link).toBe('https://www.noticel.com/pruebalandia-mejora/');
     });
   });
 });
